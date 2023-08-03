@@ -42,6 +42,11 @@
                     "help_text": "Provide path to VEP cache if vcf files are not annotated with VEP.",
                     "fa_icon": "fas fa-file"
                 },
+                "run_vep": {
+                    "type": "boolean",
+                    "description": "Set to rue to run with vep cache, set to false to inhibit running vep.",
+                    "help_text": "Specify if vep cache shall be used."
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",

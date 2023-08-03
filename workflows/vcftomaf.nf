@@ -86,18 +86,21 @@ workflow VCFTOMAF {
     
     tumor_ids   = input.map{ it -> it[0].tumor_id   } //[ it[0].id, it[0].tumor_id  ]
     normal_ids  = input.map{ it -> it[0].normal_id  } //[ it[0].id, it[0].normal_id ]
-    tumor_ids.dump(tag:"tumor-ids")
-    normal_ids.dump(tag:"normal-ids")
+    //tumor_ids.dump(tag:"tumor-ids")
+    //normal_ids.dump(tag:"normal-ids")
 
     // INTERVALS 
-    ch_intervals = params.intervals ? Channel.fromPath(params.intervals) : []
+    ch_intervals = params.intervals ? Channel.fromPath(params.intervals).collect()          : Channel.value([])
 
     // FASTA
-    fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()      : Channel.value([])
+    fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()              : Channel.value([])
+
+    // Genome version
+    genome        = params.genome   ?: Channel.empty()
 
     // VEP cache
     ch_vep_cache          = params.vep_cache ? Channel.fromPath(params.vep_cache).collect()  : Channel.value([])
-    vep_cache_unpacked    = ch_vep_cache
+    vep_cache_unpacked    = Channel.value([])
 
     if (params.vep_cache){
         ch_vep_cache = ch_vep_cache.map{
@@ -132,7 +135,7 @@ workflow VCFTOMAF {
     // Join both channels back together
     ch_vcf = ch_input.is_indexed.mix(ch_indexed_to_index)
 
-    ch_vcf.dump(tag:"ch_vcf")
+    //ch_vcf.dump(tag:"ch_vcf")
 
     //
     // MODULE: Run PASS + BED filtering
@@ -143,6 +146,8 @@ workflow VCFTOMAF {
         [],  // targets
         []   // samples
     )
+
+    ch_test = BCFTOOLS_VIEW.out.vcf
 
     ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions.first()) 
 
@@ -159,6 +164,7 @@ workflow VCFTOMAF {
         normal_ids,
         tumor_ids,
         fasta,
+        genome,
         vep_cache_unpacked       
     )
 

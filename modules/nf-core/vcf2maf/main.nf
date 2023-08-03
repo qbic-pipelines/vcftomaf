@@ -14,6 +14,7 @@ process VCF2MAF {
     val(normal_id)             // Optional
     val(tumor_id)              // Optional
     path fasta                 // Required
+    val genome                 // Required
     path vep_cache             // Required for VEP running. A default of /.vep is supplied.
 
     output:
@@ -27,8 +28,7 @@ process VCF2MAF {
     def args          = task.ext.args   ?: ''
     def prefix        = task.ext.prefix ?: "${meta.id}"
     def vep_cache_cmd = vep_cache       ? "--vep-data $vep_cache" : ""
-    def inhibit_vep   = vep_cache       ? ""                      : "--inhibit-vep"
-
+    def genome_build  = genome          ? "--ncbi-build $genome"  : "" 
     def normal        = normal_id       ? "--normal-id $normal_id --vcf-normal-id $normal_id" : ""
     def tumor         = tumor_id        ? "--tumor-id $tumor_id   --vcf-tumor-id  $tumor_id"  : ""
 
@@ -49,7 +49,7 @@ process VCF2MAF {
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
-        $inhibit_vep \\
+        $genome_build \\
         --ref-fasta $fasta \\
         $normal \\
         $tumor  \\
