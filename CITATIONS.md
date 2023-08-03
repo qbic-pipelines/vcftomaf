@@ -10,9 +10,13 @@
 
 ## Pipeline tools
 
-- [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+- [vcf2maf](https://github.com/mskcc/vcf2maf)
 
-  > Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
+> Cyriac Kandoth. mskcc/vcf2maf: vcf2maf v1.6.19. (2020). doi:10.5281/zenodo.593251
+
+- [Maftools](https://github.com/PoisonAlien/maftools)
+
+  > Mayakonda A, Lin DC, Assenov Y, Plass C, Koeffler HP. Maftools: efficient and comprehensive analysis of somatic variants in cancer. Genome Res. 2018 Nov;28(11):1747-1756. doi: 10.1101/gr.239244.118. Epub 2018 Oct 19. PMID: 30341162; PMCID: PMC6211645..
 
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 
