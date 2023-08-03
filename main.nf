@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    nf-core/vcftomaf
+    qbic-pipelines/vcftomaf
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/nf-core/vcftomaf
+    Github : https://github.com/qbic-pipelines/vcftomaf
     Website: https://nf-co.re/vcftomaf
     Slack  : https://nfcore.slack.com/channels/vcftomaf
 ----------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ WorkflowMain.initialise(workflow, params, log)
 include { VCFTOMAF } from './workflows/vcftomaf'
 
 //
-// WORKFLOW: Run main nf-core/vcftomaf analysis pipeline
+// WORKFLOW: Run main qbic-pipelines/vcftomaf analysis pipeline
 //
 workflow NFCORE_VCFTOMAF {
     VCFTOMAF ()

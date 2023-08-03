@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/vcftomaf/master/nextflow_schema.json",
-    "title": "nf-core/vcftomaf pipeline parameters",
+    "$id": "https://raw.githubusercontent.com/qbic-pipelines/vcftomaf/master/nextflow_schema.json",
+    "title": "qbic-pipelines/vcftomaf pipeline parameters",
     "description": "Convert vcf files to maf format",
     "type": "object",
     "definitions": {

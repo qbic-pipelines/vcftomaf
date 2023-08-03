@@ -1,4 +1,4 @@
-# nf-core/vcftomaf: Output
+# qbic-pipelines/vcftomaf: Output
 
 ## Introduction
 

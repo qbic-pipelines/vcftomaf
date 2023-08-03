@@ -1,6 +1,6 @@
 {
-    "name": "nf-core/vcftomaf",
-    "homePage": "https://github.com/nf-core/vcftomaf",
+    "name": "qbic-pipelines/vcftomaf",
+    "homePage": "https://github.com/qbic-pipelines/vcftomaf",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

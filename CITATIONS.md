@@ -1,4 +1,4 @@
-# nf-core/vcftomaf: Citations
+# qbic-pipelines/vcftomaf: Citations
 
 ## [nf-core](https://pubmed.ncbi.nlm.nih.gov/32055031/)
 
