@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The piepeline converts VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). It can be subsequently analyzed with the R package maftools.
+The pipeline converts VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). It can be subsequently analyzed with the R package maftools.
 
 ## Samplesheet input
 

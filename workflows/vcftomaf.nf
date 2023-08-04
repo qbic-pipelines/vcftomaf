@@ -86,8 +86,6 @@ workflow VCFTOMAF {
     
     tumor_ids   = input.map{ it -> it[0].tumor_id   } //[ it[0].id, it[0].tumor_id  ]
     normal_ids  = input.map{ it -> it[0].normal_id  } //[ it[0].id, it[0].normal_id ]
-    //tumor_ids.dump(tag:"tumor-ids")
-    //normal_ids.dump(tag:"normal-ids")
 
     // INTERVALS 
     ch_intervals = params.intervals ? Channel.fromPath(params.intervals).collect()          : Channel.value([])
@@ -134,8 +132,6 @@ workflow VCFTOMAF {
 
     // Join both channels back together
     ch_vcf = ch_input.is_indexed.mix(ch_indexed_to_index)
-
-    //ch_vcf.dump(tag:"ch_vcf")
 
     //
     // MODULE: Run PASS + BED filtering
