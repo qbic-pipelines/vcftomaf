@@ -10,6 +10,8 @@
 
 ## Pipeline tools
 
+- [BCFtools](https://github.com/samtools/bcftools)
+
 - [vcf2maf](https://github.com/mskcc/vcf2maf)
 
 > Cyriac Kandoth. mskcc/vcf2maf: vcf2maf v1.6.19. (2020). doi:10.5281/zenodo.593251
