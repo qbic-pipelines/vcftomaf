@@ -16,12 +16,12 @@
             "normal_id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Provide name for normal sample"                
+                "errorMessage": "Provide name for normal sample"
             },
             "tumor_id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Provide name for tumor sample (if available)"                
+                "errorMessage": "Provide name for tumor sample (if available)"
             },
             "vcf": {
                 "type": "string",

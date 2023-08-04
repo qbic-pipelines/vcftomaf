@@ -1,3 +1,0 @@
-sample,normal_id,tumor_id,vcf,index
-test,testN,,/home-link/afijo01/repos/vcftomaf/tests/testdata/test.genome.vcf.gz,/home-link/afijo01/repos/vcftomaf/tests/testdata/test.genome.vcf.gz.tbi
-test2,,testT,/home-link/afijo01/repos/vcftomaf/tests/testdata/test2.genome.vcf.gz,

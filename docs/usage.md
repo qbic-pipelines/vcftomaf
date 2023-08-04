@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The piepeline converts VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). It can be subsequently analyzed with the R package maftools.  
+The piepeline converts VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). It can be subsequently analyzed with the R package maftools.
 
 ## Samplesheet input
 
@@ -28,20 +28,19 @@ test2,normal,tumor,/path/to/vcf,
 
 ### Full samplesheet
 
-
 ```console
 sample,normal_id,tumor_id,vcf,index
 test1,normal,,/path/to/vcf,/path/to/tbi
 test2,normal,tumor,/path/to/vcf,
 ```
 
-| Colum       | Description                                                                 |
-| ----------- | ----------------------------------------------------------------------------|
-| `sample`    | Custom sample name. Has to be unique and shoudl not contain spaces.         |
-| `normal_id` | Name or ID of tumor sample                                                  |
-| `tumor_id`  | Name or ID of tumor sample                                                  |
-| `vcf`       | Path to `vcf.gz`` file                                                      |
-| `index`     | Path to `vcf.gz.tbi`` file                                                  |
+| Colum       |  Description                                                        |
+| ----------- | ------------------------------------------------------------------- |
+| `sample`    | Custom sample name. Has to be unique and shoudl not contain spaces. |
+| `normal_id` | Name or ID of tumor sample                                          |
+| `tumor_id`  | Name or ID of tumor sample                                          |
+| `vcf`       | Path to `vcf.gz`` file                                              |
+| `index`     | Path to `vcf.gz.tbi`` file                                          |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
@@ -80,7 +79,7 @@ Specify the genome build - needed for the file conversion.
 
 ### `--intervals`
 
-The input vcf files are PASS filtered by default. 
+The input vcf files are PASS filtered by default.
 Additionally, if the path to a file containing the targeted intervals for panel sequencing data is specified, off-target regions will be filtered out.
 
 ### `--vep_cache`
@@ -90,7 +89,6 @@ Please provide a path to a compressed vep-cache file if you wish to run vep.
 ### `--run_vep`
 
 Set to true if you wish to run vep. Default is false.
-
 
 ### Params file
 
