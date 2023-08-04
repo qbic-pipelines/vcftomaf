@@ -9,6 +9,8 @@ Initial release of qbic-pipelines/vcftomaf, created with the [nf-core](https://n
 
 ### `Added`
 
+- [#1](https://github.com/qbic-pipelines/vcftomaf/pull/1) - First working version of pipeline
+
 ### `Fixed`
 
 ### `Dependencies`
