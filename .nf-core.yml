@@ -1,1 +1,12 @@
 repository_type: pipeline
+lint:
+  files_unchanged:
+    - assets/email_template.txt
+    - assets/sendmail_template.txt
+    - assets/multiqc_config.yml
+    - .github/CONTRIBUTING.md
+    - .github/PULL_REQUEST_TEMPLATE.md
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - lib/NfcoreTemplate.groovy
+    - nextflow.config
+    - docs/README.md
