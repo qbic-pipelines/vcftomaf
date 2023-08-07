@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The pipeline converts VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). It can be subsequently analyzed with the R package maftools.
+The pipeline converts VEP annotated VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). It can be subsequently analyzed with the R package maftools. Currently, the pipeline does not support snpEff output for file format conversion.
 
 ## Samplesheet input
 
@@ -36,7 +36,7 @@ test2,normal,tumor,/path/to/vcf,
 
 | Colum       |  Description                                                        |
 | ----------- | ------------------------------------------------------------------- |
-| `sample`    | Custom sample name. Has to be unique and shoudl not contain spaces. |
+| `sample`    | Custom sample name. Has to be unique and should not contain spaces. |
 | `normal_id` | Name or ID of tumor sample                                          |
 | `tumor_id`  | Name or ID of tumor sample                                          |
 | `vcf`       | Path to `vcf.gz`` file                                              |

@@ -64,7 +64,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-qbic-pipelines/vcftomaf was originally written by SusiJo.
+qbic-pipelines/vcftomaf was originally written by [SusiJo](https://github.com/SusiJo).
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
