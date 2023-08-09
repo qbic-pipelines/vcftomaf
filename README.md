@@ -1,4 +1,4 @@
-# ![qbic-pipelines/vcftomaf](docs/images/nf-core-vcftomaf_logo_light.png#gh-light-mode-only) ![qbic-pipelines/vcftomaf](docs/images/nf-core-vcftomaf_logo_dark.png#gh-dark-mode-only)
+# ![qbic-pipelines/vcftomaf](docs/images/qbic-pipelines-vcftomaf-logo.png#gh-light-mode-only) ![qbic-pipelines/vcftomaf](docs/images/qbic-pipelines-vcftomaf-logo-dark.png.png#gh-dark-mode-only)
 
 [![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
 
