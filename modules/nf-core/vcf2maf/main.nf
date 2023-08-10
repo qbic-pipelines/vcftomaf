@@ -4,7 +4,7 @@ process VCF2MAF {
     label 'process_low'
 
     // WARN: Version information not provided by tool on CLI. Please update version string below when bumping container versions.
-    conda "umccr::vcf2maf=1.6.21.20230511 bioconda::ensembl-vep=108.2"
+    conda "bioconda::vcf2maf-umccr=1.6.21.20230511 bioconda::ensembl-vep=108.2"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/mulled-v2-b1882a8fe50273c1485ae9ededaf10b625862cc1:2e14951bfa86df1bc30bb0dc1a0a3ec5fbaa5fd2-0':
         'biocontainers/mulled-v2-b1882a8fe50273c1485ae9ededaf10b625862cc1:2e14951bfa86df1bc30bb0dc1a0a3ec5fbaa5fd2-0' }"
