@@ -1,5 +1,5 @@
 //
-// This file holds several functions specific to the workflow/vcftomaf.nf in the nf-core/vcftomaf pipeline
+// This file holds several functions specific to the workflow/vcftomaf.nf in the qbic-pipelines/vcftomaf pipeline
 //
 
 import nextflow.Nextflow

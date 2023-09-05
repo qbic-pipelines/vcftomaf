@@ -1,11 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    nf-core/vcftomaf
+    qbic-pipelines/vcftomaf
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/nf-core/vcftomaf
-    Website: https://nf-co.re/vcftomaf
-    Slack  : https://nfcore.slack.com/channels/vcftomaf
+    Github : https://github.com/qbic-pipelines/vcftomaf
 ----------------------------------------------------------------------------------------
 */
 
@@ -17,9 +15,6 @@ nextflow.enable.dsl = 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-// TODO nf-core: Remove this line if you don't need a FASTA file
-//   This is an example of how to use getGenomeAttribute() to fetch parameters
-//   from igenomes.config using `--genome`
 params.fasta = WorkflowMain.getGenomeAttribute(params, 'fasta')
 
 /*
@@ -55,7 +50,7 @@ WorkflowMain.initialise(workflow, params, log)
 include { VCFTOMAF } from './workflows/vcftomaf'
 
 //
-// WORKFLOW: Run main nf-core/vcftomaf analysis pipeline
+// WORKFLOW: Run main qbic-pipelines/vcftomaf analysis pipeline
 //
 workflow NFCORE_VCFTOMAF {
     VCFTOMAF ()
