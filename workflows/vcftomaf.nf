@@ -75,12 +75,19 @@ workflow VCFTOMAF {
 
     // INPUT
     input = Channel.fromSamplesheet("input")
-        .map{ meta, normal_id, tumor_id, vcf, index ->
-            meta.index       = index     ? true      : false
-            meta.normal_id   = normal_id ? normal_id : ''
-            meta.tumor_id    = tumor_id  ? tumor_id  : ''
+        .map{ meta, normal_id, tumor_id, vcf_normal_id, vcf_tumor_id, vcf, index ->
+            meta.index           = index     ? true      : false
+
+            if(normal_id){
+                meta.normal_id       = normal_id
+                meta.vcf_normal_id   = vcf_normal_id
+            }
+            if(tumor_id){
+                meta.tumor_id        = tumor_id
+                meta.vcf_tumor_id    = vcf_tumor_id
+            }
             return [meta, vcf, index] // it[0], it[1], it[2]
-        }
+        }.view()
 
     // INTERVALS
     ch_intervals = params.intervals ? Channel.fromPath(params.intervals).collect()          : Channel.value([])

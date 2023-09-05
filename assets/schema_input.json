@@ -17,12 +17,22 @@
             "normal_id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Provide name for normal sample"
+                "errorMessage": "Provide name for normal sample for the maf file"
             },
             "tumor_id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Provide name for tumor sample (if available)"
+                "errorMessage": "Provide name for tumor sample (if available) for the maf file"
+            },
+            "vcf_normal_id": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Provide name for normal sample as specified in the vcf"
+            },
+            "vcf_tumor_id": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Provide name for tumor sample (if available) as specified in the vcf"
             },
             "vcf": {
                 "type": "string",
