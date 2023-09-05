@@ -46,7 +46,6 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // MODULE: Installed directly from nf-core/modules
 //
 include { BCFTOOLS_VIEW               } from '../modules/nf-core/bcftools/view/main'
-include { BCFTOOLS_STATS              } from '../modules/nf-core/bcftools/stats/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { GUNZIP                      } from '../modules/nf-core/gunzip/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
@@ -83,11 +82,7 @@ workflow VCFTOMAF {
             return [meta, vcf, index] // it[0], it[1], it[2]
         }
 
-    
-    tumor_ids   = input.map{ it -> it[0].tumor_id   } //[ it[0].id, it[0].tumor_id  ]
-    normal_ids  = input.map{ it -> it[0].normal_id  } //[ it[0].id, it[0].normal_id ]
-
-    // INTERVALS 
+    // INTERVALS
     ch_intervals = params.intervals ? Channel.fromPath(params.intervals).collect()          : Channel.value([])
 
     // FASTA
@@ -104,15 +99,15 @@ workflow VCFTOMAF {
         ch_vep_cache = ch_vep_cache.map{
             it -> def new_id = ""
               if(it) {
-                  new_id = it[0].simpleName.toString()                  
-                } 
-            [[id:new_id], it] 
-        }  
+                  new_id = it[0].simpleName.toString()
+                }
+            [[id:new_id], it]
+        }
         // UNTAR if available
         vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
         ch_versions         = ch_versions.mix(UNTAR.out.versions)
     }
-        
+
 
     // BRANCH CHANNEL
     input.branch{
@@ -125,10 +120,10 @@ workflow VCFTOMAF {
 
     // Create tbi index only if not provided
     TABIX_TABIX(input_to_index)
-    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first()) 
+    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
     // Join tbi index back to input
-    ch_indexed_to_index = input_to_index.join(TABIX_TABIX.out.tbi)  
+    ch_indexed_to_index = input_to_index.join(TABIX_TABIX.out.tbi)
 
     // Join both channels back together
     ch_vcf = ch_input.is_indexed.mix(ch_indexed_to_index)
@@ -138,33 +133,29 @@ workflow VCFTOMAF {
     //
     BCFTOOLS_VIEW (
         ch_vcf,
-        ch_intervals,  
+        ch_intervals,
         [],  // targets
         []   // samples
     )
 
-    ch_test = BCFTOOLS_VIEW.out.vcf
-
-    ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions.first()) 
+    ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions.first())
 
     //
     // MODULE: Extract the gzipped VCF files
     //
     GUNZIP(BCFTOOLS_VIEW.out.vcf)
 
-    ch_versions = ch_versions.mix(GUNZIP.out.versions.first())      
+    ch_versions = ch_versions.mix(GUNZIP.out.versions.first())
 
     // Convert to MAF
     VCF2MAF(
         GUNZIP.out.gunzip,
-        normal_ids,
-        tumor_ids,
         fasta,
         genome,
-        vep_cache_unpacked       
+        vep_cache_unpacked
     )
 
-    ch_versions = ch_versions.mix(VCF2MAF.out.versions.first()) 
+    ch_versions = ch_versions.mix(VCF2MAF.out.versions.first())
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
