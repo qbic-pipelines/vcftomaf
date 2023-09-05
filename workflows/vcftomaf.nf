@@ -87,7 +87,7 @@ workflow VCFTOMAF {
                 meta.vcf_tumor_id    = vcf_tumor_id
             }
             return [meta, vcf, index] // it[0], it[1], it[2]
-        }.view()
+        }
 
     // INTERVALS
     ch_intervals = params.intervals ? Channel.fromPath(params.intervals).collect()          : Channel.value([])
