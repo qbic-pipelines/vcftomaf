@@ -163,9 +163,9 @@ workflow VCFTOMAF {
         dict.view()
         chain.view()
         PICARD_LIFTOVERVCF(GUNZIP.out.gunzip,
-                            fasta.map{ it -> [[id:it.baseName], fasta]},
-                            dict.map{ it -> [[id:it.baseName], dict]},
-                            chain.map{ it -> [[id:it.baseName], chain]})
+                            fasta.map{ it -> [ [ id:it.baseName ], it ] },
+                            dict.map{ it -> [ [ id:it.baseName ], it ] },
+                            chain.map{ it -> [ [ id:it.baseName ], it ] })
         ch_vcftomaf = PICARD_LIFTOVERVCF.out.vcf_lifted
         ch_vcftomaf.view()
         ch_versions = ch_versions.mix(PICARD_LIFTOVERVCF.out.versions.first())
