@@ -94,8 +94,8 @@ workflow VCFTOMAF {
 
     // FASTA
     fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()              : Channel.value([])
-    dict         = params.dict     ? Channel.fromPath(params.dict).collect()                : Channel.value()
-    chain        = params.chain     ? Channel.fromPath(params.chain).collect()              : Channel.value()
+    dict         = params.dict      ? Channel.fromPath(params.dict).collect()               : Channel.empty()
+    chain        = params.chain     ? Channel.fromPath(params.chain).collect()              : Channel.empty()
 
     // Genome version
     genome        = params.genome   ?: Channel.empty()
