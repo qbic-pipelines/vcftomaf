@@ -95,7 +95,7 @@ workflow VCFTOMAF {
     // FASTA
     fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()              : Channel.value([])
     dict         = params.dict     ? Channel.fromPath(params.dict).collect()                : Channel.value()
-    chain        = params.chain     ? Channel.fromPath(params.chain).collect()                : Channel.value()
+    chain        = params.chain     ? Channel.fromPath(params.chain).collect()              : Channel.value()
 
     // Genome version
     genome        = params.genome   ?: Channel.empty()
@@ -157,7 +157,7 @@ workflow VCFTOMAF {
     ch_versions = ch_versions.mix(GUNZIP.out.versions.first())
 
     ch_vcftomaf = GUNZIP.out.gunzip
-    if(params.chainfile){
+    if(params.chain){
         PICARD_LIFTOVERVCF(GUNZIP.out.gunzip,
                             fasta.map{ it -> [[id:it.baseName], fasta]},
                             dict.map{ it -> [[id:it.baseName], dict]},
