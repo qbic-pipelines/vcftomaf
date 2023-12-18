@@ -49,6 +49,7 @@ include { BCFTOOLS_VIEW               } from '../modules/nf-core/bcftools/view/m
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { GUNZIP                      } from '../modules/nf-core/gunzip/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
+include { PICARD_LIFTOVERVCF          } from '../modules/nf-core/picard/liftovervcf/main'
 include { TABIX_TABIX                 } from '../modules/nf-core/tabix/tabix/main'
 include { UNTAR                       } from '../modules/nf-core/untar/main'
 include { VCF2MAF                     } from '../modules/nf-core/vcf2maf/main'
@@ -77,12 +78,11 @@ workflow VCFTOMAF {
     input = Channel.fromSamplesheet("input")
         .map{ meta, normal_id, tumor_id, vcf_normal_id, vcf_tumor_id, vcf, index ->
             meta.index           = index     ? true      : false
-
-            if(normal_id){
+            if (normal_id) {
                 meta.normal_id       = normal_id
                 meta.vcf_normal_id   = vcf_normal_id
             }
-            if(tumor_id){
+            if (tumor_id) {
                 meta.tumor_id        = tumor_id
                 meta.vcf_tumor_id    = vcf_tumor_id
             }
@@ -94,6 +94,8 @@ workflow VCFTOMAF {
 
     // FASTA
     fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()              : Channel.value([])
+    dict         = params.dict     ? Channel.fromPath(params.dict).collect()                : Channel.value()
+    chain        = params.chain     ? Channel.fromPath(params.chain).collect()                : Channel.value()
 
     // Genome version
     genome        = params.genome   ?: Channel.empty()
@@ -105,8 +107,8 @@ workflow VCFTOMAF {
     if (params.vep_cache){
         ch_vep_cache = ch_vep_cache.map{
             it -> def new_id = ""
-              if(it) {
-                  new_id = it[0].simpleName.toString()
+                if(it) {
+                    new_id = it[0].simpleName.toString()
                 }
             [[id:new_id], it]
         }
@@ -154,9 +156,19 @@ workflow VCFTOMAF {
 
     ch_versions = ch_versions.mix(GUNZIP.out.versions.first())
 
+    ch_vcftomaf = GUNZIP.out.gunzip
+    if(params.chainfile){
+        PICARD_LIFTOVERVCF(GUNZIP.out.gunzip,
+                            fasta.map{ it -> [[id:it.baseName], fasta]},
+                            dict.map{ it -> [[id:it.baseName], dict]},
+                            chain.map{ it -> [[id:it.baseName], chain]})
+        ch_vcftomaf = PICARD_LIFTOVERVCF.out.vcf_lifted
+        ch_versions = ch_versions.mix(PICARD_LIFTOVERVCF.out.versions.first())
+    }
+
     // Convert to MAF
     VCF2MAF(
-        GUNZIP.out.gunzip,
+        ch_vcftomaf,
         fasta,
         genome,
         vep_cache_unpacked
