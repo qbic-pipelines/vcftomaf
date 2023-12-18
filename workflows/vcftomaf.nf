@@ -151,7 +151,7 @@ workflow VCFTOMAF {
 
     ch_gunzip = BCFTOOLS_VIEW.out.vcf
     if(params.chain){
-        PICARD_LIFTOVERVCF(GUNZIP.out.gunzip,
+        PICARD_LIFTOVERVCF(BCFTOOLS_VIEW.out.vcf,
                             dict.map{ it -> [ [ id:it.baseName ], it ] },
                             fasta.map{ it -> [ [ id:it.baseName ], it ] },
                             chain.map{ it -> [ [ id:it.baseName ], it ] })
