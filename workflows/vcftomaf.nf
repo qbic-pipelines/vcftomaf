@@ -158,11 +158,16 @@ workflow VCFTOMAF {
 
     ch_vcftomaf = GUNZIP.out.gunzip
     if(params.chain){
+        GUNZIP.out.gunzip.view()
+        fasta.view()
+        dict.view()
+        chain.view()
         PICARD_LIFTOVERVCF(GUNZIP.out.gunzip,
                             fasta.map{ it -> [[id:it.baseName], fasta]},
                             dict.map{ it -> [[id:it.baseName], dict]},
                             chain.map{ it -> [[id:it.baseName], chain]})
         ch_vcftomaf = PICARD_LIFTOVERVCF.out.vcf_lifted
+        ch_vcftomaf.view()
         ch_versions = ch_versions.mix(PICARD_LIFTOVERVCF.out.versions.first())
     }
 
