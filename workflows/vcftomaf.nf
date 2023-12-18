@@ -149,31 +149,25 @@ workflow VCFTOMAF {
 
     ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions.first())
 
-    //
-    // MODULE: Extract the gzipped VCF files
-    //
-    GUNZIP(BCFTOOLS_VIEW.out.vcf)
-
-    ch_versions = ch_versions.mix(GUNZIP.out.versions.first())
-
-    ch_vcftomaf = GUNZIP.out.gunzip
+    ch_gunzip = BCFTOOLS_VIEW.out.vcf
     if(params.chain){
-        GUNZIP.out.gunzip.view()
-        fasta.view()
-        dict.view()
-        chain.view()
         PICARD_LIFTOVERVCF(GUNZIP.out.gunzip,
                             dict.map{ it -> [ [ id:it.baseName ], it ] },
                             fasta.map{ it -> [ [ id:it.baseName ], it ] },
                             chain.map{ it -> [ [ id:it.baseName ], it ] })
-        ch_vcftomaf = PICARD_LIFTOVERVCF.out.vcf_lifted
-        ch_vcftomaf.view()
+        ch_gunzip = PICARD_LIFTOVERVCF.out.vcf_lifted
         ch_versions = ch_versions.mix(PICARD_LIFTOVERVCF.out.versions.first())
     }
 
+    //
+    // MODULE: Extract the gzipped VCF files
+    //
+    GUNZIP(ch_gunzip)
+    ch_versions = ch_versions.mix(GUNZIP.out.versions.first())
+
     // Convert to MAF
     VCF2MAF(
-        ch_vcftomaf,
+        GUNZIP.out.gunzip,
         fasta,
         genome,
         vep_cache_unpacked
