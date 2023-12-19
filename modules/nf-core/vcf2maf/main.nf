@@ -10,9 +10,7 @@ process VCF2MAF {
         'biocontainers/mulled-v2-b1882a8fe50273c1485ae9ededaf10b625862cc1:2e14951bfa86df1bc30bb0dc1a0a3ec5fbaa5fd2-0' }"
 
     input:
-    tuple val(meta), path(vcf) // Use an uncompressed VCF file!    
-    val(normal_id)             // Optional
-    val(tumor_id)              // Optional
+    tuple val(meta), path(vcf) // Use an uncompressed VCF file!
     path fasta                 // Required
     val genome                 // Required
     path vep_cache             // Required for VEP running. A default of /.vep is supplied.
@@ -28,9 +26,7 @@ process VCF2MAF {
     def args          = task.ext.args   ?: ''
     def prefix        = task.ext.prefix ?: "${meta.id}"
     def vep_cache_cmd = vep_cache       ? "--vep-data $vep_cache" : ""
-    def genome_build  = genome          ? "--ncbi-build $genome"  : "" 
-    def normal        = normal_id       ? "--normal-id $normal_id --vcf-normal-id $normal_id" : ""
-    def tumor         = tumor_id        ? "--tumor-id $tumor_id   --vcf-tumor-id  $tumor_id"  : ""
+    def genome_build  = genome          ? "--ncbi-build $genome"  : ""
 
     // If VEP is present, it will find it and add it to commands.
     // If VEP is not present they will be blank
@@ -51,8 +47,6 @@ process VCF2MAF {
         $vep_cache_cmd \\
         $genome_build \\
         --ref-fasta $fasta \\
-        $normal \\
-        $tumor  \\
         --input-vcf $vcf \\
         --output-maf ${prefix}.maf
 
