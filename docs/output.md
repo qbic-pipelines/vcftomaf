@@ -11,6 +11,7 @@ The directories listed below will be created in the results directory after the 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
 - [BCFtools](#bcftools) - Utilities for variant calling and manipulating VCFs and BCFs
+- [LiftOver VCF](#liftovervcf) - Lifts over a VCF file from one reference build to another
 - [vcf2maf](#vcf2maf) - Conversion of vcf to maf format
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
@@ -26,6 +27,22 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 </details>
 
 [BCFtools](https://github.com/samtools/bcftools) is a set of command-line tools for variant calling and manipulation of Variant Call Format (VCF) files and their binary counterpart BCF.
+
+### LiftOverVCF
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `liftover/lifted`
+  - `*.vcf.gz`: liftover VCF file.
+- `liftover/unlifted`
+  - `*.vcf.gz`: Variants that could not be lifted over
+- `liftover/logs`
+  - `*.liftover.log`: Logs with liftover statistics
+
+</details>
+
+[`Picard LiftOverVCF`](https://gatk.broadinstitute.org/hc/en-us/articles/360037060932-LiftoverVcf-Picard) is a tool for "lifting over" a VCF from one genome build to another, producing a properly headered, sorted and indexed VCF in one go.
 
 ### VCF2MAF
 

@@ -52,7 +52,7 @@ These tests are run both with the latest available version of `Nextflow` and als
 
 ## Getting help
 
-For further information/help, please consult the [qbic-pipelines/vcftomaf documentation](https://nf-co.re/vcftomaf/usage) and don't hesitate to get in touch on the nf-core Slack [#vcftomaf](https://nfcore.slack.com/channels/vcftomaf) channel ([join our Slack here](https://nf-co.re/join/slack)).
+For further information/help, please consult the [qbic-pipelines/vcftomaf documentation](https://github.com/qbic-pipelines/vcftomaf/tree/master/docs) and don't hesitate to get in touch via the Issue templates.
 
 ## Pipeline contribution conventions
 

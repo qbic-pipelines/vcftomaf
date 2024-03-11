@@ -16,6 +16,7 @@ process PICARD_LIFTOVERVCF {
     output:
     tuple val(meta), path("*.lifted.vcf.gz")  , emit: vcf_lifted
     tuple val(meta), path("*.unlifted.vcf.gz"), emit: vcf_unlifted
+    tuple val(meta), path("*.log")            , emit: log
     path "versions.yml"                       , emit: versions
 
     when:
@@ -39,7 +40,8 @@ process PICARD_LIFTOVERVCF {
         --OUTPUT ${prefix}.lifted.vcf.gz \\
         --CHAIN $chain \\
         --REJECT ${prefix}.unlifted.vcf.gz \\
-        --REFERENCE_SEQUENCE $fasta
+        --REFERENCE_SEQUENCE $fasta \\
+        2> ${prefix}.liftover.log
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
