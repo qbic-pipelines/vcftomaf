@@ -14,8 +14,9 @@
 The resulting file(s) can be analyzed singly or as an entire cohort in R with [maftools](https://github.com/PoisonAlien/maftools).
 
 1. Filtering VCF files for PASS and optionally with a target bed file ([`BCFtools`](https://github.com/samtools/bcftools))
-2. Conversion of vcf to maf format([`vcf2maf`](https://github.com/mskcc/vcf2maf))
-3. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+2. Optional liftover (needs a `chain` file, `--fasta` should refer to target genome version) ([`Picard LiftOverVCF`](https://gatk.broadinstitute.org/hc/en-us/articles/360037060932-LiftoverVcf-Picard))
+3. Conversion from vcf to maf format([`vcf2maf`](https://github.com/mskcc/vcf2maf))
+4. Collect QC metrics and versions ([`MultiQC`](http://multiqc.info/))
 
 ## Usage
 
@@ -29,12 +30,20 @@ First, prepare a samplesheet with your input data that looks as follows:
 `samplesheet.csv`:
 
 ```csv
-sample,normal_id,tumor_id,vcf,index
-test1,control1,tumor1,/path/to/vcf,/path/to/tbi
-test2,control2,,/path/to/vcf,/path/to/tbi
+sample,normal_id,vcf_normal_id,tumor_id,vcf_tumor_id,vcf,index
+mutect2_sample1,SAMPLE123,PATIENT1_SAMPLE123,SAMPLE456,PATIENT1_SAMPLE456,/path/to/vcf,/path/to/tbi
+test2,control2,NORMAl,,,/path/to/vcf,/path/to/tbi
 ```
 
-Each row represents a sample with one or two columns in the VCF file. The `normal_id` and `tumor_id` will be used for naming the columns in the MAF file.
+Each row represents a sample with one or two columns in the VCF file. The `normal_id` and `tumor_id` will be used for naming the columns in the MAF file. The `vcf_normal/tumor_id` refers to the sample name in the VCF file. This differs for each caller. For VCFs obtained from nf-core/sarek, the following is tested:
+
+| Caller   | Normal ID               | Tumor ID                |
+| :------- | :---------------------- | :---------------------- |
+| Manta    | NORMAL                  | TUMOR                   |
+| Mutect2  | {_patient_}_{\_sample_} | {_patient_}_{\_sample_} |
+| Strelka2 | NORMAL                  | TUMOR                   |
+
+The values for _patient_ and _sample_ can be obtained from the nf-core/sarek samplesheet.
 
 Now, you can run the pipeline using:
 
