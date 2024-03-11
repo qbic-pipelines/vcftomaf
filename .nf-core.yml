@@ -10,3 +10,5 @@ lint:
     - lib/NfcoreTemplate.groovy
     - nextflow.config
     - docs/README.md
+template:
+  prefix: qbic-pipelines
