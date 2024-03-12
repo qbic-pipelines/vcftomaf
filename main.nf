@@ -31,8 +31,8 @@ params.fasta = getGenomeAttribute('fasta')
 params.dict = getGenomeAttribute('dict')
 
 // Extra files
-intervals = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([])
-//chain     = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([]) //Channel.fromPath(params.chain).collect() //--> this fails  // params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty()
+intervals = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([]) // --> this is fine with class groovyx.gpars.dataflow.DataflowVariable
+//chain     = params.chain    ? Channel.fromPath(params.chain).collect()      : Channel.empty() // --> this results in class nextflow.extension.OpCall
 
 // FASTA
 fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
@@ -65,21 +65,21 @@ workflow QBICPIPELINES_VCFTOMAF {
     //
     // WORKFLOW: Run pipeline
     //
-    chain        = params.chain    ? Channel.fromPath(params.chain).collect()      : Channel.empty()
+    chain        = params.chain    ? Channel.fromPath(params.chain).collect()      : Channel.empty() // this is fine with a class groovyx.gpars.dataflow.DataflowVariable
+
     VCFTOMAF (
         samplesheet,
         intervals,
         fasta,
         dict,
         chain,
-        //Channel.fromPath(params.chain).collect(), //--> this works
         genome,
         vep_cache,
         vep_cache_unpacked
     )
 
     emit:
-    multiqc_report = Channel.empty() //VCFTOMAF.out.multiqc_report // channel: /path/to/multiqc_report.html
+    multiqc_report = VCFTOMAF.out.multiqc_report // channel: /path/to/multiqc_report.html
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
