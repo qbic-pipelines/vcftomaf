@@ -43,23 +43,6 @@ workflow VCFTOMAF {
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
 
-    // Initialize input file channels based on params
-
-    // INPUT
-    input = Channel.fromSamplesheet("input")
-        .map{ meta, normal_id, tumor_id, vcf_normal_id, vcf_tumor_id, vcf, index ->
-            meta.index           = index     ? true      : false
-            if (normal_id) {
-                meta.normal_id       = normal_id
-                meta.vcf_normal_id   = vcf_normal_id
-            }
-            if (tumor_id) {
-                meta.tumor_id        = tumor_id
-                meta.vcf_tumor_id    = vcf_tumor_id
-            }
-            return [meta, vcf, index] // it[0], it[1], it[2]
-        }
-
     if (params.vep_cache){
         ch_vep_cache = ch_vep_cache.map{
             it -> def new_id = ""
@@ -74,7 +57,7 @@ workflow VCFTOMAF {
     }
 
     // BRANCH CHANNEL
-    input.branch{
+    ch_samplesheet.branch{
         is_indexed:  it[0].index == true
         to_index:    it[0].index == false
     }.set{ch_input}
