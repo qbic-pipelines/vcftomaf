@@ -94,6 +94,7 @@ workflow VCFTOMAF {
     ch_gunzip = BCFTOOLS_VIEW.out.vcf
 
     if(params.chain){
+        println(intervals.getClass())
         println(chain.getClass())
         PICARD_LIFTOVERVCF(BCFTOOLS_VIEW.out.vcf,
                             dict.map{ it -> [ [ id:it.baseName ], it ] },
