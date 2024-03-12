@@ -42,7 +42,7 @@ dict         = params.dict      ? Channel.fromPath(params.dict).collect()       
 genome        = params.genome   ?: Channel.empty()
 
 // VEP cache
-vep_cache          = params.vep_cache ? Channel.fromPath(params.vep_cache).collect() : Channel.value([])
+vep_cache          = Channel.value([]) //params.vep_cache ? Channel.fromPath(params.vep_cache).collect() : Channel.value([])
 vep_cache_unpacked = Channel.value([])
 
 
