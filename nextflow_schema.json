@@ -31,6 +31,8 @@
                 },
                 "chain": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
                     "description": "Chain file, if liftover is done. (The fasta file of the target needs to be provided)",
                     "fa_icon": "fas fa-link"
                 },
