@@ -32,7 +32,7 @@ params.dict = getGenomeAttribute('dict')
 
 // Extra files
 intervals = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([])
-chain     = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([]) //Channel.fromPath(params.chain).collect() //--> this fails  // params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty()
+//chain     = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([]) //Channel.fromPath(params.chain).collect() //--> this fails  // params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty()
 
 // FASTA
 fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
@@ -65,7 +65,7 @@ workflow QBICPIPELINES_VCFTOMAF {
     //
     // WORKFLOW: Run pipeline
     //
-    //chain        = Channel.fromPath(params.chain).collect() --> this also works
+    chain        = params.chain    ? Channel.fromPath(params.chain).collect()      : Channel.empty()
     VCFTOMAF (
         samplesheet,
         intervals,
