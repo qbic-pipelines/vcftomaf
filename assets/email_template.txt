@@ -1,6 +1,3 @@
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- qbic-pipelines/vcftomaf v${version}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Run Name: $runName
 
 <% if (success){

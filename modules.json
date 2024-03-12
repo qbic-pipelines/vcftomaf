@@ -27,7 +27,7 @@
                     },
                     "multiqc": {
                         "branch": "master",
-                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "git_sha": "b7ebe95761cd389603f9cc0e0dc384c0f663815a",
                         "installed_by": ["modules"]
                     },
                     "picard/liftovervcf": {
@@ -50,6 +50,25 @@
                         "git_sha": "603ecbd9f45300c9788f197d2a15a005685b4220",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/vcf2maf/vcf2maf.diff"
+                    }
+                }
+            },
+            "subworkflows": {
+                "nf-core": {
+                    "utils_nextflow_pipeline": {
+                        "branch": "master",
+                        "git_sha": "5caf7640a9ef1d18d765d55339be751bb0969dfa",
+                        "installed_by": ["subworkflows"]
+                    },
+                    "utils_nfcore_pipeline": {
+                        "branch": "master",
+                        "git_sha": "5caf7640a9ef1d18d765d55339be751bb0969dfa",
+                        "installed_by": ["subworkflows"]
+                    },
+                    "utils_nfvalidation_plugin": {
+                        "branch": "master",
+                        "git_sha": "5caf7640a9ef1d18d765d55339be751bb0969dfa",
+                        "installed_by": ["subworkflows"]
                     }
                 }
             }
