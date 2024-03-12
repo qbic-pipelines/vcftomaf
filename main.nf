@@ -68,7 +68,6 @@ workflow QBICPIPELINES_VCFTOMAF {
     // WORKFLOW: Run pipeline
     //
 
-    chain.view()
     VCFTOMAF (
         samplesheet,
         intervals,
