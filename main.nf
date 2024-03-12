@@ -38,7 +38,7 @@ fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()      
 dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.empty()
 
 // Chain file
-//chain        = Channel.fromPath(params.chain).collect()  //        : Channel.empty()
+chain        = Channel.fromPath(params.chain).collect()  //        : Channel.empty()
 
 // Genome version
 genome        = params.genome   ?: Channel.empty()
@@ -73,7 +73,7 @@ workflow QBICPIPELINES_VCFTOMAF {
         intervals,
         fasta,
         dict,
-        Channel.fromPath(params.chain).collect(),
+        chain,
         genome,
         vep_cache,
         vep_cache_unpacked
