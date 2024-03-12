@@ -30,15 +30,13 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcft
 params.fasta = getGenomeAttribute('fasta')
 params.dict = getGenomeAttribute('dict')
 
-// INTERVALS
+// Extra files
 intervals = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([])
+chain     = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([]) //Channel.fromPath(params.chain).collect() //--> this fails  // params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty()
 
 // FASTA
 fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
 dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.empty()
-
-// Chain file
-chain        = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.empty() //Channel.fromPath(params.chain).collect() //--> this fails  // params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty()
 
 // Genome version
 genome        = params.genome   ?: Channel.empty()

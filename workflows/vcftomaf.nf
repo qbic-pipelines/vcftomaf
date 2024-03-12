@@ -40,6 +40,10 @@ workflow VCFTOMAF {
 
     main:
 
+    println("vcftomaf.nf")
+    println(intervals.getClass())
+    println(chain.getClass())
+
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
@@ -94,8 +98,7 @@ workflow VCFTOMAF {
     ch_gunzip = BCFTOOLS_VIEW.out.vcf
 
     if(params.chain){
-        println(intervals.getClass())
-        println(chain.getClass())
+
         PICARD_LIFTOVERVCF(BCFTOOLS_VIEW.out.vcf,
                             dict.map{ it -> [ [ id:it.baseName ], it ] },
                             fasta.map{ it -> [ [ id:it.baseName ], it ] },
