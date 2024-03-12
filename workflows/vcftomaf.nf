@@ -8,7 +8,6 @@
 // MODULE: Installed directly from nf-core/modules
 //
 include { BCFTOOLS_VIEW               } from '../modules/nf-core/bcftools/view/main'
-include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { GUNZIP                      } from '../modules/nf-core/gunzip/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { PICARD_LIFTOVERVCF          } from '../modules/nf-core/picard/liftovervcf/main'
