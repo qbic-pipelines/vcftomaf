@@ -1,12 +1,18 @@
 Changes in module 'nf-core/vcf2maf'
+--- modules/nf-core/vcf2maf/environment.yml
++++ modules/nf-core/vcf2maf/environment.yml
+@@ -5,4 +5,4 @@
+   - defaults
+ dependencies:
+   - bioconda::vcf2maf=1.6.21
+-  - bioconda::ensembl-vep=106.1
++  - bioconda::ensembl-vep=108.2
+
 --- modules/nf-core/vcf2maf/main.nf
 +++ modules/nf-core/vcf2maf/main.nf
-@@ -4,14 +4,17 @@
-     label 'process_low'
- 
+@@ -6,12 +6,13 @@
      // WARN: Version information not provided by tool on CLI. Please update version string below when bumping container versions.
--    conda "bioconda::vcf2maf=1.6.21 bioconda::ensembl-vep=106.1"
-+    conda "umccr::vcf2maf=1.6.21.20230511 bioconda::ensembl-vep=108.2"
+     conda "${moduleDir}/environment.yml"
      container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
 -        'https://depot.galaxyproject.org/singularity/mulled-v2-b6fc09bed47d0dc4d8384ce9e04af5806f2cc91b:305092c6f8420acd17377d2cc8b96e1c3ccb7d26-0':
 -        'biocontainers/mulled-v2-b6fc09bed47d0dc4d8384ce9e04af5806f2cc91b:305092c6f8420acd17377d2cc8b96e1c3ccb7d26-0' }"
@@ -14,57 +20,32 @@ Changes in module 'nf-core/vcf2maf'
 +        'biocontainers/mulled-v2-b1882a8fe50273c1485ae9ededaf10b625862cc1:2e14951bfa86df1bc30bb0dc1a0a3ec5fbaa5fd2-0' }"
  
      input:
--    tuple val(meta), path(vcf) // Use an uncompressed VCF file!
-+    tuple val(meta), path(vcf) // Use an uncompressed VCF file!    
-+    val(normal_id)             // Optional
-+    val(tumor_id)              // Optional
+     tuple val(meta), path(vcf) // Use an uncompressed VCF file!
      path fasta                 // Required
 +    val genome                 // Required
      path vep_cache             // Required for VEP running. A default of /.vep is supplied.
  
      output:
-@@ -25,30 +28,38 @@
+@@ -25,9 +26,11 @@
      def args          = task.ext.args   ?: ''
      def prefix        = task.ext.prefix ?: "${meta.id}"
      def vep_cache_cmd = vep_cache       ? "--vep-data $vep_cache" : ""
-+    def genome_build  = genome          ? "--ncbi-build $genome"  : "" 
-+    def normal        = normal_id       ? "--normal-id $normal_id --vcf-normal-id $normal_id" : ""
-+    def tumor         = tumor_id        ? "--tumor-id $tumor_id   --vcf-tumor-id  $tumor_id"  : ""
++    def genome_build  = genome          ? "--ncbi-build $genome"  : ""
 +
      // If VEP is present, it will find it and add it to commands.
      // If VEP is not present they will be blank
 -    def VERSION = '1.6.21' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
-+    // `--vep_path` : PATH_TO_VEP_EXEC
-+    // `--vep_data` : PATH_TO_VEP_CACHE
-+    def VCF2MAF_VERSION = '1.6.21.20230511' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
++    def VERSION = '1.6.21.20230511' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
      """
      if command -v vep &> /dev/null
      then
-         VEP_CMD="--vep-path \$(dirname \$(type -p vep))"
--        VEP_VERSION=\$(echo -e "\\n    ensemblvep: \$( echo \$(vep --help 2>&1) | sed 's/^.*Versions:.*ensembl-vep : //;s/ .*\$//')")
-     else
-         VEP_CMD=""
--        VEP_VERSION=""
-     fi
- 
-     vcf2maf.pl \\
+@@ -42,6 +45,7 @@
          $args \\
          \$VEP_CMD \\
          $vep_cache_cmd \\
 +        $genome_build \\
          --ref-fasta $fasta \\
-+        $normal \\
-+        $tumor  \\
          --input-vcf $vcf \\
          --output-maf ${prefix}.maf
- 
-     cat <<-END_VERSIONS > versions.yml
-     "${task.process}":
--        vcf2maf: $VERSION\$VEP_VERSION
-+        vcf2maf: $VCF2MAF_VERSION
-+        ensembl-vep: \$(echo \$(vep --help 2>&1) | sed 's/^.*Versions:.*ensembl-vep : //;s/ .*\$//')
-     END_VERSIONS
-     """
- }
 
 ************************************************************

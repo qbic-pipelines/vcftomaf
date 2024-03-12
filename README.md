@@ -1,12 +1,14 @@
 # ![qbic-pipelines/vcftomaf](docs/images/qbic-pipelines-vcftomaf-logo.png#gh-light-mode-only) ![qbic-pipelines/vcftomaf](docs/images/qbic-pipelines-vcftomaf-logo-dark.png.png#gh-dark-mode-only)
 
-[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![GitHub Actions CI Status](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/ci.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/ci.yml)
+[![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A523.04.0-23aa62.svg)](https://www.nextflow.io/)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
-[![Launch on Nextflow Tower](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Nextflow%20Tower-%234256e7)](https://tower.nf/launch?pipeline=https://github.com/qbic-pipelines/vcftomaf)
+[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://tower.nf/launch?pipeline=https://github.com/qbic-pipelines/vcftomaf)
 
 ## Introduction
 
@@ -20,10 +22,8 @@ The resulting file(s) can be analyzed singly or as an entire cohort in R with [m
 
 ## Usage
 
-> **Note**
-> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how
-> to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline)
-> with `-profile test` before running the workflow on actual data.
+> [!NOTE]
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
 First, prepare a samplesheet with your input data that looks as follows:
 
@@ -54,18 +54,9 @@ nextflow run qbic-pipelines/vcftomaf \
    --outdir <OUTDIR>
 ```
 
-> **Warning:**
-> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those
-> provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
+> [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
 > see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
-
-For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/vcftomaf/usage) and the [parameter documentation](https://nf-co.re/vcftomaf/parameters).
-
-## Pipeline output
-
-To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/vcftomaf/results) tab on the nf-core website pipeline page.
-For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/vcftomaf/output).
 
 ## Credits
 
@@ -77,15 +68,17 @@ We thank the following people for their extensive assistance in the development 
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
 
-For further information or help, don't hesitate to get in touch on the [Slack `#vcftomaf` channel](https://nfcore.slack.com/channels/vcftomaf) (you can join with [this invite](https://nf-co.re/join/slack)).
-
 ## Citations
 
-If you use qbic-pipelines/vcftomaf for your analysis, please cite it using the following doi: 10.5281/zenodo.XXXXXX
+<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
+<!-- If you use qbic-pipelines/vcftomaf for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+
+<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
-The pipeline is currently maintained at QBiC and not an nf-core pipeline since it has not undergone nf-core community review. It was created using the nf-core template and integrates their institutional profiles as well as many other resources. If you use this pipeline, please cite them as follows:
+This pipeline is based on code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
+The pipeline is currently maintained at QBiC and not an nf-core pipeline since it has not undergone nf-core community review.
 
 You can cite the `nf-core` publication as follows:
 
