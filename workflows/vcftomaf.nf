@@ -97,7 +97,7 @@ workflow VCFTOMAF {
         PICARD_LIFTOVERVCF(BCFTOOLS_VIEW.out.vcf,
                             dict.map{ it -> [ [ id:it.baseName ], it ] },
                             fasta.map{ it -> [ [ id:it.baseName ], it ] },
-                            chain.map{ it -> [ [ id:it.baseName ], it ] })
+                            chain)
         ch_gunzip = PICARD_LIFTOVERVCF.out.vcf_lifted
         ch_versions = ch_versions.mix(PICARD_LIFTOVERVCF.out.versions.first())
     }
