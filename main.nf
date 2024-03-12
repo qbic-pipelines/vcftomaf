@@ -73,8 +73,8 @@ workflow QBICPIPELINES_VCFTOMAF {
         intervals,
         fasta,
         dict,
-        //chain,
-        Channel.fromPath(params.chain).collect(), //--> this works
+        chain,
+        //Channel.fromPath(params.chain).collect(), //--> this works
         genome,
         vep_cache,
         vep_cache_unpacked
