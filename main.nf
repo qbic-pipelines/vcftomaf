@@ -31,8 +31,8 @@ params.fasta = getGenomeAttribute('fasta')
 params.dict = getGenomeAttribute('dict')
 
 // Extra files
-intervals = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([]) // --> this is fine with class groovyx.gpars.dataflow.DataflowVariable
-//chain     = params.chain    ? Channel.fromPath(params.chain).collect()      : Channel.empty() // --> this results in class nextflow.extension.OpCall
+intervals      = params.intervals      ? Channel.fromPath(params.intervals).collect()      : Channel.value([])
+liftover_chain = params.liftover_chain ? Channel.fromPath(params.liftover_chain).collect() : Channel.value([])
 
 // FASTA
 fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
@@ -65,14 +65,13 @@ workflow QBICPIPELINES_VCFTOMAF {
     //
     // WORKFLOW: Run pipeline
     //
-    chain        = params.chain    ? Channel.fromPath(params.chain).collect()      : Channel.empty() // this is fine with a class groovyx.gpars.dataflow.DataflowVariable
 
     VCFTOMAF (
         samplesheet,
         intervals,
         fasta,
         dict,
-        chain,
+        liftover_chain,
         genome,
         vep_cache,
         vep_cache_unpacked

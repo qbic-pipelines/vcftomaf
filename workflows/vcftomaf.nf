@@ -33,16 +33,12 @@ workflow VCFTOMAF {
     intervals
     fasta
     dict
-    chain
+    liftover_chain
     genome
     vep_cache
     vep_cache_unpacked
 
     main:
-
-    println("vcftomaf.nf")
-    println(intervals.getClass())
-    println(chain.getClass())
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
@@ -97,12 +93,12 @@ workflow VCFTOMAF {
 
     ch_gunzip = BCFTOOLS_VIEW.out.vcf
 
-    if(params.chain){
+    if(params.liftover_chain){
 
         PICARD_LIFTOVERVCF(BCFTOOLS_VIEW.out.vcf,
                             dict.map{ it -> [ [ id:it.baseName ], it ] },
                             fasta.map{ it -> [ [ id:it.baseName ], it ] },
-                            chain.map{ it -> [ [ id:it.baseName ], it ] })
+                            liftover_chain.map{ it -> [ [ id:it.baseName ], it ] })
         ch_gunzip = PICARD_LIFTOVERVCF.out.vcf_lifted
         ch_versions = ch_versions.mix(PICARD_LIFTOVERVCF.out.versions.first())
     }

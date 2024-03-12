@@ -85,7 +85,7 @@ Specify the genome build - needed for the file conversion.
 
 Fasta dictionary file, needed for liftover option
 
-### `--chain`
+### `--liftover_chain`
 
 Chain file, if liftover should be done
 
