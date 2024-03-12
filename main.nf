@@ -38,7 +38,7 @@ fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()      
 dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.empty()
 
 // Chain file
-//chain        = Channel.fromPath(params.chain).collect()  //        : Channel.empty()
+chain        = params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty() //--> this fails
 
 // Genome version
 genome        = params.genome   ?: Channel.empty()
@@ -67,7 +67,7 @@ workflow QBICPIPELINES_VCFTOMAF {
     //
     // WORKFLOW: Run pipeline
     //
-    chain        = Channel.fromPath(params.chain).collect()
+    //chain        = Channel.fromPath(params.chain).collect() --> this also works
     VCFTOMAF (
         samplesheet,
         intervals,
