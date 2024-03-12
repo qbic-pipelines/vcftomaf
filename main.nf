@@ -27,23 +27,25 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcft
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-params.fasta = getGenomeAttribute(params, 'fasta')
-params.dict = getGenomeAttribute(params, 'dict')
+params.fasta = getGenomeAttribute('fasta')
+params.dict = getGenomeAttribute('dict')
 
 // INTERVALS
-intervals = params.intervals ? Channel.fromPath(params.intervals).collect()          : Channel.value([])
+intervals = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.value([])
 
 // FASTA
-fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()              : Channel.value([])
-dict         = params.dict      ? Channel.fromPath(params.dict).collect()               : Channel.empty()
-chain        = params.chain     ? Channel.fromPath(params.chain).collect()              : Channel.empty()
+fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
+dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.empty()
+
+// Chain file
+chain        = params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty()
 
 // Genome version
 genome        = params.genome   ?: Channel.empty()
 
 // VEP cache
-vep_cache          = params.vep_cache ? Channel.fromPath(params.vep_cache).collect()  : Channel.value([])
-vep_cache_unpacked    = Channel.value([])
+vep_cache          = params.vep_cache ? Channel.fromPath(params.vep_cache).collect() : Channel.value([])
+vep_cache_unpacked = Channel.value([])
 
 
 /*
@@ -77,8 +79,7 @@ workflow QBICPIPELINES_VCFTOMAF {
     )
 
     emit:
-    multiqc_report = VCFTOMAF.out.multiqc_report // channel: /path/to/multiqc_report.html
-
+    multiqc_report = Channel.empty() //VCFTOMAF.out.multiqc_report // channel: /path/to/multiqc_report.html
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,7 +109,6 @@ workflow {
     //
     QBICPIPELINES_VCFTOMAF (
         PIPELINE_INITIALISATION.out.samplesheet
-
     )
 
     //

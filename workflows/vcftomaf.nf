@@ -39,12 +39,17 @@ workflow VCFTOMAF {
     vep_cache
     vep_cache_unpacked
 
+    main:
+
+    ch_versions = Channel.empty()
+    ch_multiqc_files = Channel.empty()
+
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
 
     if (params.vep_cache){
-        ch_vep_cache = ch_vep_cache.map{
+        ch_vep_cache = vep_cache.map{
             it -> def new_id = ""
                 if(it) {
                     new_id = it[0].simpleName.toString()
