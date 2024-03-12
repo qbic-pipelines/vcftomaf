@@ -67,13 +67,14 @@ workflow QBICPIPELINES_VCFTOMAF {
     //
     // WORKFLOW: Run pipeline
     //
-
+    chain        = Channel.fromPath(params.chain).collect()
     VCFTOMAF (
         samplesheet,
         intervals,
         fasta,
         dict,
-        Channel.fromPath(params.chain).collect(),
+        chain,
+        //Channel.fromPath(params.chain).collect(), --> this works
         genome,
         vep_cache,
         vep_cache_unpacked
