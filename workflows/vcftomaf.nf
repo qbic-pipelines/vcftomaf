@@ -47,18 +47,19 @@ workflow VCFTOMAF {
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
 
-    if (params.vep_cache){
-        ch_vep_cache = vep_cache.map{
-            it -> def new_id = ""
-                if(it) {
-                    new_id = it[0].simpleName.toString()
-                }
-            [[id:new_id], it]
-        }
-        // UNTAR if available
-        vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
-        ch_versions         = ch_versions.mix(UNTAR.out.versions)
-    }
+    // VEP annotation is currently not supported from within vcf2maf : https://github.com/mskcc/vcf2maf/issues/335
+    // if (params.vep_cache){
+    //     ch_vep_cache = vep_cache.map{
+    //         it -> def new_id = ""
+    //             if(it) {
+    //                 new_id = it[0].simpleName.toString()
+    //             }
+    //         [[id:new_id], it]
+    //     }
+    //     // UNTAR if available
+    //     vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
+    //     ch_versions         = ch_versions.mix(UNTAR.out.versions)
+    // }
 
     // BRANCH CHANNEL
     ch_samplesheet.branch{
