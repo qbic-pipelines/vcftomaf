@@ -38,7 +38,7 @@ fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()      
 dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.empty()
 
 // Chain file
-//chain        = Channel.fromPath(params.chain).collect() //--> this fails  // params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty()
+chain        = params.intervals    ? Channel.fromPath(params.intervals).collect()      : Channel.empty() //Channel.fromPath(params.chain).collect() //--> this fails  // params.chain     ? Channel.fromPath(params.chain).collect()          : Channel.empty()
 
 // Genome version
 genome        = params.genome   ?: Channel.empty()
