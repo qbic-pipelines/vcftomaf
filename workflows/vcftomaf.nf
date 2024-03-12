@@ -31,6 +31,13 @@ workflow VCFTOMAF {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
+    intervals
+    fasta
+    dict
+    chain
+    genome
+    vep_cache
+    vep_cache_unpacked
 
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
@@ -53,21 +60,6 @@ workflow VCFTOMAF {
             return [meta, vcf, index] // it[0], it[1], it[2]
         }
 
-    // INTERVALS
-    ch_intervals = params.intervals ? Channel.fromPath(params.intervals).collect()          : Channel.value([])
-
-    // FASTA
-    fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()              : Channel.value([])
-    dict         = params.dict      ? Channel.fromPath(params.dict).collect()               : Channel.empty()
-    chain        = params.chain     ? Channel.fromPath(params.chain).collect()              : Channel.empty()
-
-    // Genome version
-    genome        = params.genome   ?: Channel.empty()
-
-    // VEP cache
-    ch_vep_cache          = params.vep_cache ? Channel.fromPath(params.vep_cache).collect()  : Channel.value([])
-    vep_cache_unpacked    = Channel.value([])
-
     if (params.vep_cache){
         ch_vep_cache = ch_vep_cache.map{
             it -> def new_id = ""
@@ -80,7 +72,6 @@ workflow VCFTOMAF {
         vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
         ch_versions         = ch_versions.mix(UNTAR.out.versions)
     }
-
 
     // BRANCH CHANNEL
     input.branch{
@@ -106,7 +97,7 @@ workflow VCFTOMAF {
     //
     BCFTOOLS_VIEW (
         ch_vcf,
-        ch_intervals,
+        intervals,
         [],  // targets
         []   // samples
     )

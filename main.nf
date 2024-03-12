@@ -30,6 +30,22 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcft
 params.fasta = getGenomeAttribute(params, 'fasta')
 params.dict = getGenomeAttribute(params, 'dict')
 
+// INTERVALS
+intervals = params.intervals ? Channel.fromPath(params.intervals).collect()          : Channel.value([])
+
+// FASTA
+fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()              : Channel.value([])
+dict         = params.dict      ? Channel.fromPath(params.dict).collect()               : Channel.empty()
+chain        = params.chain     ? Channel.fromPath(params.chain).collect()              : Channel.empty()
+
+// Genome version
+genome        = params.genome   ?: Channel.empty()
+
+// VEP cache
+vep_cache          = params.vep_cache ? Channel.fromPath(params.vep_cache).collect()  : Channel.value([])
+vep_cache_unpacked    = Channel.value([])
+
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     NAMED WORKFLOWS FOR PIPELINE
@@ -50,7 +66,14 @@ workflow QBICPIPELINES_VCFTOMAF {
     // WORKFLOW: Run pipeline
     //
     VCFTOMAF (
-        samplesheet
+        samplesheet,
+        intervals,
+        fasta,
+        dict,
+        chain,
+        genome,
+        vep_cache,
+        vep_cache_unpacked
     )
 
     emit:
@@ -85,6 +108,7 @@ workflow {
     //
     QBICPIPELINES_VCFTOMAF (
         PIPELINE_INITIALISATION.out.samplesheet
+
     )
 
     //
