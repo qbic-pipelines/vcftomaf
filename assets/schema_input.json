@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/vcftomaf/master/assets/schema_input.json",
-    "title": "nf-core/vcftomaf pipeline - params.input schema",
+    "$id": "https://raw.githubusercontent.com/qbic-pipelines/vcftomaf/master/assets/schema_input.json",
+    "title": "qbic-pipelines/vcftomaf pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
     "type": "array",
     "items": {
@@ -10,27 +10,47 @@
             "sample": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Sample name must be provided and cannot contain spaces"
+                "unique": true,
+                "errorMessage": "Unique sample name must be provided and cannot contain spaces",
+                "meta": ["id"]
             },
-            "fastq_1": {
+            "normal_id": {
                 "type": "string",
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "pattern": "^\\S+$",
+                "errorMessage": "Provide name for normal sample for the maf file",
+                "dependentRequired": ["vcf_normal_id"]
             },
-            "fastq_2": {
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'",
-                "anyOf": [
-                    {
-                        "type": "string",
-                        "pattern": "^\\S+\\.f(ast)?q\\.gz$"
-                    },
-                    {
-                        "type": "string",
-                        "maxLength": 0
-                    }
-                ]
+            "tumor_id": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Provide name for tumor sample (if available) for the maf file",
+                "dependentRequired": ["vcf_tumor_id"]
+            },
+            "vcf_normal_id": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Provide name for normal sample as specified in the vcf"
+            },
+            "vcf_tumor_id": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Provide name for tumor sample (if available) as specified in the vcf"
+            },
+            "vcf": {
+                "type": "string",
+                "pattern": "^\\S+\\.vcf\\.gz$",
+                "errorMessage": "Input vcf file must be gzipped and have extenstion '.vcf.gz'",
+                "exists": true,
+                "format": "file-path"
+            },
+            "index": {
+                "type": "string",
+                "pattern": "^\\S+\\.vcf\\.gz.tbi$",
+                "errorMessage": "Index file for vcf must have extension '.vcf.gz.tbi'",
+                "exists": true,
+                "format": "file-path"
             }
         },
-        "required": ["sample", "fastq_1"]
+        "required": ["sample", "vcf"]
     }
 }

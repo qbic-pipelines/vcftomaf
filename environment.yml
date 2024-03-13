@@ -1,0 +1,8 @@
+name: qbic-pipelines-vcftomaf-dev
+channels:
+  - bioconda
+  - conda-forge
+  - umccr
+dependencies:
+  - umccr::vcf2maf=1.6.21.20230511
+  - bioconda::ensembl-vep=108.2

@@ -1,12 +1,10 @@
-# nf-core/vcftomaf: Usage
-
-## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/vcftomaf/usage](https://nf-co.re/vcftomaf/usage)
+# qbic-pipelines/vcftomaf: Usage
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
 ## Introduction
 
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
+The pipeline converts VEP annotated VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). Additionally, the VCFs can be lifted over to a different build if necessary. It can be subsequently analyzed with the R package maftools. Currently, the pipeline does not support snpEff output for file format conversion.
 
 ## Samplesheet input
 
@@ -18,46 +16,44 @@ You will need to create a samplesheet with information about the samples you wou
 
 ### Multiple runs of the same sample
 
-The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
+The `sample` identifier should be unique. You can specify a normal and a tumor id that will be displayed in the resulting maf files. This step is independent of the file naming and naming inside the vcf file.
 
-```console
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
+`samplesheet.csv`:
+
+```csv
+sample,normal_id,vcf_normal_id,tumor_id,vcf_tumor_id,vcf,index
+mutect2_sample1,SAMPLE123,PATIENT1_SAMPLE123,SAMPLE456,PATIENT1_SAMPLE456,/path/to/vcf,/path/to/tbi
+test2,control2,NORMAl,,,/path/to/vcf,/path/to/tbi
 ```
 
-### Full samplesheet
-
-The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.
-
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
-
-```console
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
-CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
-```
-
-| Column    | Description                                                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+| Colum           |  Description                                                        |
+| --------------- | ------------------------------------------------------------------- |
+| `sample`        | Custom sample name. Has to be unique and should not contain spaces. |
+| `normal_id`     | Name or ID of normal sample in the MAF file                         |
+| `vcf_normal_id` | Name or ID of normal sample as specified in the VCF file            |
+| `tumor_id`      | Name or ID of tumor sample in the MAF file                          |
+| `vcf_tumor_id`  | Name or ID of tumor sample as specified in the VCF file             |
+| `vcf`           | Path to `vcf.gz`` file                                              |
+| `index`         | Path to `vcf.gz.tbi`` file                                          |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+
+Each row represents a sample with one or two columns in the VCF file. The `normal_id` and `tumor_id` will be used for naming the columns in the MAF file. The `vcf_normal/tumor_id` refers to the sample name in the VCF file. This differs for each caller. For VCFs obtained from nf-core/sarek, the following is tested:
+
+| Caller   | Normal ID               | Tumor ID                |
+| :------- | :---------------------- | :---------------------- |
+| Manta    | NORMAL                  | TUMOR                   |
+| Mutect2  | {_patient_}_{\_sample_} | {_patient_}_{\_sample_} |
+| Strelka2 | NORMAL                  | TUMOR                   |
+
+The values for _patient_ and _sample_ can be obtained from the nf-core/sarek samplesheet.
 
 ## Running the pipeline
 
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/vcftomaf --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
+nextflow run qbic-pipelines/vcftomaf --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh37 -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -71,16 +67,55 @@ work                # Directory containing the nextflow working files
 # Other nextflow hidden files, eg. history of pipeline runs and old logs.
 ```
 
+### Input parameter options
+
+### `--input`
+
+Specify the path to the input samplesheet.
+
+### `--fasta`
+
+Specify the path to fasta reference - needed for the file conversion.
+
+### `--genome`
+
+Specify the genome build - needed for the file conversion.
+
+### `--dict`
+
+Fasta dictionary file, needed for liftover option
+
+### `--liftover_chain`
+
+Chain file, if liftover should be done
+
+### `--intervals`
+
+The input vcf files are PASS filtered by default.
+Additionally, if the path to a file containing the targeted intervals for panel sequencing data is specified, off-target regions will be filtered out.
+
+<!-- ### `--vep_cache`
+
+Please provide a path to a compressed vep-cache file if you wish to run vep.
+
+### `--run_vep`
+
+Set to true if you wish to run vep. Default is false. -->
+
+### Params file
+
 If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
 
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
 
-> ⚠️ Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
+:::warning
+Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
+:::
 
 The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run nf-core/vcftomaf -profile docker -params-file params.yaml
+nextflow run qbic-pipelines/vcftomaf -profile docker -params-file params.yaml
 ```
 
 with `params.yaml` containing:
@@ -99,24 +134,28 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
 
 ```bash
-nextflow pull nf-core/vcftomaf
+nextflow pull qbic-pipelines/vcftomaf
 ```
 
 ### Reproducibility
 
 It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
-First, go to the [nf-core/vcftomaf releases page](https://github.com/nf-core/vcftomaf/releases) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
+First, go to the [qbic-pipelines/vcftomaf releases page](https://github.com/qbic-pipelines/vcftomaf/releases) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
 
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future. For example, at the bottom of the MultiQC reports.
 
 To further assist in reproducbility, you can use share and re-use [parameter files](#running-the-pipeline) to repeat pipeline runs with the same settings without having to write out a command with every single parameter.
 
-> 💡 If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, nor institutional specific profiles.
+:::tip
+If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, nor institutional specific profiles.
+:::
 
 ## Core Nextflow arguments
 
-> **NB:** These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+:::note
+These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+:::
 
 ### `-profile`
 
@@ -124,7 +163,9 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
-> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+:::info
+We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+:::
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to see if your system is available in these configs please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
