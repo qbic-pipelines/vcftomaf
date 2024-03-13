@@ -58,6 +58,11 @@ nextflow run qbic-pipelines/vcftomaf \
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
 > see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
 
+For more details and further functionality, please refer to the [usage documentation](docs/usage.md) and the [parameter documentation](nextflow_schema.json).
+
+For more details about the output files and reports, please refer to the
+[output documentation](docs/output.md).
+
 ## Credits
 
 qbic-pipelines/vcftomaf was originally written by [SusiJo](https://github.com/SusiJo) and [Friederike Hanssen](https://github.com/FriederikeHanssen)
