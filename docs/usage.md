@@ -94,13 +94,13 @@ Chain file, if liftover should be done
 The input vcf files are PASS filtered by default.
 Additionally, if the path to a file containing the targeted intervals for panel sequencing data is specified, off-target regions will be filtered out.
 
-### `--vep_cache`
+<!-- ### `--vep_cache`
 
 Please provide a path to a compressed vep-cache file if you wish to run vep.
 
 ### `--run_vep`
 
-Set to true if you wish to run vep. Default is false.
+Set to true if you wish to run vep. Default is false. -->
 
 ### Params file
 
