@@ -1,7 +1,7 @@
 # ![qbic-pipelines/vcftomaf](docs/images/qbic-pipelines-vcftomaf-logo.png#gh-light-mode-only) ![qbic-pipelines/vcftomaf](docs/images/qbic-pipelines-vcftomaf-logo-dark.png.png#gh-dark-mode-only)
 
 [![GitHub Actions CI Status](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/ci.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/ci.yml)
-[![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.10812762-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.10812762)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A523.04.0-23aa62.svg)](https://www.nextflow.io/)
@@ -75,8 +75,7 @@ If you would like to contribute to this pipeline, please see the [contributing g
 
 ## Citations
 
-<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use qbic-pipelines/vcftomaf for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+If you use qbic-pipelines/vcftomaf for your analysis, please cite it using the following doi: [10.5281/zenodo.10812762](https://zenodo.org/doi/10.5281/zenodo.10812762)
 
 <!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
 
