@@ -24,7 +24,6 @@ The resulting file(s) can be analyzed singly or as an entire cohort in R with [m
 3. Conversion from vcf to maf format([`vcf2maf`](https://github.com/mskcc/vcf2maf))
 4. Collect QC metrics and versions ([`MultiQC`](http://multiqc.info/))
 
-
 ## Usage
 
 > [!NOTE]
