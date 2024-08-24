@@ -1,12 +1,10 @@
 # qbic-pipelines/vcftomaf: Usage
 
-## :warning: Please read this documentation on the nf-core website: [https://github.com/qbic-pipelines/vcftomaf/usage](https://github.com/qbic-pipelines/vcftomaf/usage)
-
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
 ## Introduction
 
-The pipeline converts VEP annotated VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). It can be subsequently analyzed with the R package maftools. Currently, the pipeline does not support snpEff output for file format conversion.
+The pipeline converts VEP annotated VCF files to a tab-separated and easy to parse MAF (mutation annotation format) file primarily using the perl tool [vcf2maf](https://github.com/mskcc/vcf2maf). Additionally, the VCFs can be lifted over to a different build if necessary. It can be subsequently analyzed with the R package maftools. Currently, the pipeline does not support snpEff output for file format conversion.
 
 ## Samplesheet input
 
@@ -20,36 +18,42 @@ You will need to create a samplesheet with information about the samples you wou
 
 The `sample` identifier should be unique. You can specify a normal and a tumor id that will be displayed in the resulting maf files. This step is independent of the file naming and naming inside the vcf file.
 
-```console
-sample,normal_id,tumor_id,vcf,index
-test1,normal,,/path/to/vcf,/path/to/tbi
-test2,normal,tumor,/path/to/vcf,
+`samplesheet.csv`:
+
+```csv
+sample,normal_id,vcf_normal_id,tumor_id,vcf_tumor_id,vcf,index
+mutect2_sample1,SAMPLE123,PATIENT1_SAMPLE123,SAMPLE456,PATIENT1_SAMPLE456,/path/to/vcf,/path/to/tbi
+test2,control2,NORMAl,,,/path/to/vcf,/path/to/tbi
 ```
 
-### Full samplesheet
-
-```console
-sample,normal_id,tumor_id,vcf,index
-test1,normal,,/path/to/vcf,/path/to/tbi
-test2,normal,tumor,/path/to/vcf,
-```
-
-| Colum       |  Description                                                        |
-| ----------- | ------------------------------------------------------------------- |
-| `sample`    | Custom sample name. Has to be unique and should not contain spaces. |
-| `normal_id` | Name or ID of tumor sample                                          |
-| `tumor_id`  | Name or ID of tumor sample                                          |
-| `vcf`       | Path to `vcf.gz`` file                                              |
-| `index`     | Path to `vcf.gz.tbi`` file                                          |
+| Colum           |  Description                                                        |
+| --------------- | ------------------------------------------------------------------- |
+| `sample`        | Custom sample name. Has to be unique and should not contain spaces. |
+| `normal_id`     | Name or ID of normal sample in the MAF file                         |
+| `vcf_normal_id` | Name or ID of normal sample as specified in the VCF file            |
+| `tumor_id`      | Name or ID of tumor sample in the MAF file                          |
+| `vcf_tumor_id`  | Name or ID of tumor sample as specified in the VCF file             |
+| `vcf`           | Path to `vcf.gz`` file                                              |
+| `index`         | Path to `vcf.gz.tbi`` file                                          |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+
+Each row represents a sample with one or two columns in the VCF file. The `normal_id` and `tumor_id` will be used for naming the columns in the MAF file. The `vcf_normal/tumor_id` refers to the sample name in the VCF file. This differs for each caller. For VCFs obtained from nf-core/sarek, the following is tested:
+
+| Caller   | Normal ID               | Tumor ID                |
+| :------- | :---------------------- | :---------------------- |
+| Manta    | NORMAL                  | TUMOR                   |
+| Mutect2  | {_patient_}_{\_sample_} | {_patient_}_{\_sample_} |
+| Strelka2 | NORMAL                  | TUMOR                   |
+
+The values for _patient_ and _sample_ can be obtained from the nf-core/sarek samplesheet.
 
 ## Running the pipeline
 
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run qbic-pipelines/vcftomaf --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
+nextflow run qbic-pipelines/vcftomaf --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh37 -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -77,18 +81,26 @@ Specify the path to fasta reference - needed for the file conversion.
 
 Specify the genome build - needed for the file conversion.
 
+### `--dict`
+
+Fasta dictionary file, needed for liftover option
+
+### `--liftover_chain`
+
+Chain file, if liftover should be done
+
 ### `--intervals`
 
 The input vcf files are PASS filtered by default.
 Additionally, if the path to a file containing the targeted intervals for panel sequencing data is specified, off-target regions will be filtered out.
 
-### `--vep_cache`
+<!-- ### `--vep_cache`
 
 Please provide a path to a compressed vep-cache file if you wish to run vep.
 
 ### `--run_vep`
 
-Set to true if you wish to run vep. Default is false.
+Set to true if you wish to run vep. Default is false. -->
 
 ### Params file
 
@@ -96,7 +108,9 @@ If you wish to repeatedly use the same parameters for multiple runs, rather than
 
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
 
-> ⚠️ Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
+:::warning
+Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
+:::
 
 The above pipeline run specified with a params file in yaml format:
 
@@ -133,11 +147,15 @@ This version number will be logged in reports when you run the pipeline, so that
 
 To further assist in reproducbility, you can use share and re-use [parameter files](#running-the-pipeline) to repeat pipeline runs with the same settings without having to write out a command with every single parameter.
 
-> 💡 If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, nor institutional specific profiles.
+:::tip
+If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, nor institutional specific profiles.
+:::
 
 ## Core Nextflow arguments
 
-> **NB:** These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+:::note
+These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+:::
 
 ### `-profile`
 
@@ -145,7 +163,9 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
-> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+:::info
+We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+:::
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to see if your system is available in these configs please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 

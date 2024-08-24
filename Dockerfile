@@ -9,7 +9,7 @@ COPY environment.yml /
 RUN conda install -c conda-forge mamba
 RUN mamba env create --file /environment.yml -p /opt/conda/envs/qbic-pipelines-vcftomaf-dev && \
     mamba clean --all --yes
-RUN apt-get update -qq 
+RUN apt-get update -qq
 # Add conda installation dir to PATH
 ENV PATH /opt/conda/envs/qbic-pipelines-vcftomaf-dev/bin:$PATH
 # Dump the details of the installed packates to a file for posterity

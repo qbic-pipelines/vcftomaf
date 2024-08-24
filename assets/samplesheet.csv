@@ -1,3 +1,3 @@
-sample,normal_id,tumor_id,vcf,index
-test1,normal,,/path/to/vcf,/path/to/tbi
-test2,normal,tumor,/path/to/vcf,
+sample,normal_id,vcf_normal_id,tumor_id,vcf_tumor_id,vcf,index
+test1,normal,NORMAL,,,/path/to/vcf,/path/to/tbi
+test2,normal,NORMAL,tumor,TUMOR,/path/to/vcf,
