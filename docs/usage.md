@@ -53,11 +53,7 @@ The values for _patient_ and _sample_ can be obtained from the nf-core/sarek sam
 The typical command for running the pipeline is as follows:
 
 ```bash
-<<<<<<< HEAD
 nextflow run qbic-pipelines/vcftomaf --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh37 -profile docker
-=======
-nextflow run qbic-pipelines/vcftomaf --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
->>>>>>> TEMPLATE
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.

@@ -10,17 +10,12 @@
             "sample": {
                 "type": "string",
                 "pattern": "^\\S+$",
-<<<<<<< HEAD
                 "unique": true,
                 "errorMessage": "Unique sample name must be provided and cannot contain spaces",
-=======
-                "errorMessage": "Sample name must be provided and cannot contain spaces",
->>>>>>> TEMPLATE
                 "meta": ["id"]
             },
             "normal_id": {
                 "type": "string",
-<<<<<<< HEAD
                 "pattern": "^\\S+$",
                 "errorMessage": "Provide name for normal sample for the maf file",
                 "dependentRequired": ["vcf_normal_id"]
@@ -54,19 +49,6 @@
                 "errorMessage": "Index file for vcf must have extension '.vcf.gz.tbi'",
                 "exists": true,
                 "format": "file-path"
-=======
-                "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
-            },
-            "fastq_2": {
-                "type": "string",
-                "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
->>>>>>> TEMPLATE
             }
         },
         "required": ["sample", "vcf"]
