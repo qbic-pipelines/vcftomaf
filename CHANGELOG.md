@@ -17,6 +17,6 @@ Initial release of qbic-pipelines/vcftomaf, created with the [nf-core](https://n
 
 ### `Deprecated`
 
-## v1.0.0 - [13-03-2024]
+## v1.0.0 - 13-03-2024
 
 Initial release of qbic-pipelines/vcftomaf, created with the [nf-core](https://nf-co.re/) template.

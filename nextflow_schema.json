@@ -16,12 +16,12 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
+                    "schema": "assets/schema_input.json",
                     "mimetype": "text/csv",
                     "pattern": "^\\S+\\.csv$",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
-                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/vcftomaf/usage#samplesheet-input).",
-                    "fa_icon": "fas fa-file-csv",
-                    "schema": "assets/schema_input.json"
+                    "help_text": "You will need to create a samplesheet file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with a header row. See [usage docs](https://github.com/qbic-pipelines/vcftomaf/usage#samplesheet-input).",
+                    "fa_icon": "fas fa-file-csv"
                 },
                 "outdir": {
                     "type": "string",
@@ -29,10 +29,13 @@
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
                 },
-                "chain": {
+                "liftover_chain": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
                     "description": "Chain file, if liftover is done. (The fasta file of the target needs to be provided)",
-                    "fa_icon": "fas fa-link"
+                    "fa_icon": "fas fa-link",
+                    "mimetype": "text/plain"
                 },
                 "intervals": {
                     "type": "string",
@@ -42,20 +45,6 @@
                     "pattern": "^\\S+\\.bed$",
                     "description": "Path to tab-separated file containing target intervals.",
                     "help_text": "You will need to create a provide file with information about the targeted intervals.",
-                    "fa_icon": "fas fa-file"
-                },
-                "run_vep": {
-                    "type": "boolean",
-                    "description": "Set to true to run with vep cache, set to false to inhibit running vep.",
-                    "help_text": "Specify if vep cache shall be used."
-                },
-                "vep_cache": {
-                    "type": "string",
-                    "format": "file-path",
-                    "exists": true,
-                    "pattern": "^\\S+\\.tar.gz$",
-                    "description": "Path to VEP cache.",
-                    "help_text": "Provide path to VEP cache if vcf files are not annotated with VEP.",
                     "fa_icon": "fas fa-file"
                 },
                 "email": {
