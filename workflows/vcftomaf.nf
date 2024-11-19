@@ -14,7 +14,7 @@ include { PICARD_LIFTOVERVCF          } from '../modules/nf-core/picard/liftover
 include { TABIX_TABIX                 } from '../modules/nf-core/tabix/tabix/main'
 include { UNTAR                       } from '../modules/nf-core/untar/main'
 include { VCF2MAF                     } from '../modules/nf-core/vcf2maf/main'
-include { paramsSummaryMap            } from 'plugin/nf-validation'
+include { paramsSummaryMap            } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_vcftomaf_pipeline'

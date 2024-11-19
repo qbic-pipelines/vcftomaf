@@ -253,5 +253,10 @@
         {
             "$ref": "#/$defs/generic_options"
         }
-    ]
+    ],
+    "properties": {
+        "dict": {
+            "type": "string"
+        }
+    }
 }
