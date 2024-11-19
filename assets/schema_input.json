@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://raw.githubusercontent.com/qbic-pipelines/vcftomaf/master/assets/schema_input.json",
     "title": "qbic-pipelines/vcftomaf pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
@@ -17,14 +17,12 @@
             "normal_id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Provide name for normal sample for the maf file",
-                "dependentRequired": ["vcf_normal_id"]
+                "errorMessage": "Provide name for normal sample for the maf file"
             },
             "tumor_id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Provide name for tumor sample (if available) for the maf file",
-                "dependentRequired": ["vcf_tumor_id"]
+                "errorMessage": "Provide name for tumor sample (if available) for the maf file"
             },
             "vcf_normal_id": {
                 "type": "string",
@@ -40,17 +38,19 @@
                 "type": "string",
                 "pattern": "^\\S+\\.vcf\\.gz$",
                 "errorMessage": "Input vcf file must be gzipped and have extenstion '.vcf.gz'",
-                "exists": true,
                 "format": "file-path"
             },
             "index": {
                 "type": "string",
                 "pattern": "^\\S+\\.vcf\\.gz.tbi$",
                 "errorMessage": "Index file for vcf must have extension '.vcf.gz.tbi'",
-                "exists": true,
                 "format": "file-path"
             }
         },
-        "required": ["sample", "vcf"]
+        "uniqueItems": true,
+        "dependentRequired": {
+            "tumor_id": ["vcf_tumor_id"],
+            "vcf_tumor_id": ["tumor_id"]
+        }
     }
 }
