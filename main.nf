@@ -13,21 +13,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { VCFTOMAF  } from './workflows/vcftomaf'
+include { VCFTOMAF                } from './workflows/vcftomaf'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS / WORKFLOWS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-include { VCFTOMAF  } from './workflows/vcftomaf'
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
-
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
 
 /*
@@ -103,7 +91,6 @@ workflow {
     //
     PIPELINE_INITIALISATION (
         params.version,
-        params.help,
         params.validate_params,
         params.monochrome_logs,
         args,
