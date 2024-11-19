@@ -65,7 +65,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-qbic-pipelines/vcftomaf was originally written by [SusiJo](https://github.com/SusiJo), [Friederike Hanssen](https://github.com/FriederikeHanssen) and [Famke Bäuerle](https://github.com/famosab).
+qbic-pipelines/vcftomaf was originally written by [SusiJo](https://github.com/SusiJo), [Friederike Hanssen](https://github.com/FriederikeHanssen) up to release 1.0.0. The pipeline was further developed by [Famke Bäuerle](https://github.com/famosab) after release 1.0.0.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
