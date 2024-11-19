@@ -15,6 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Deprecated`
 
-## v1.0.0 - [date]
+## v1.0.0 - 13-03-2024
 
 Initial release of qbic-pipelines/vcftomaf, created with the [nf-core](https://nf-co.re/) template.
