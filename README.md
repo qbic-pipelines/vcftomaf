@@ -15,6 +15,10 @@
 **qbic-pipelines/vcftomaf** is a bioinformatics pipeline that converts input Variant Call Format (vcf) files with one or two columns of (paired) samples to tabular Mutation Annotation Format (maf).
 The resulting file(s) can be analyzed singly or as an entire cohort in R with [maftools](https://github.com/PoisonAlien/maftools).
 
+<p align="center">
+    <img title="Overview" src="docs/images/metromap.png" width=60%>
+</p>
+
 1. Filtering VCF files for PASS and optionally with a target bed file ([`BCFtools`](https://github.com/samtools/bcftools))
 2. Optional liftover (needs a `chain` file, `--fasta` should refer to target genome version) ([`Picard LiftOverVCF`](https://gatk.broadinstitute.org/hc/en-us/articles/360037060932-LiftoverVcf-Picard))
 3. Conversion from vcf to maf format([`vcf2maf`](https://github.com/mskcc/vcf2maf))
