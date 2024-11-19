@@ -1,3 +1,4 @@
+bump_version: null
 lint:
   files_exist:
     - CODE_OF_CONDUCT.md
@@ -26,6 +27,17 @@ lint:
   nextflow_config:
     - manifest.name
     - manifest.homePage
+nf_core_version: 3.0.2
+org_path: null
 repository_type: pipeline
 template:
-  prefix: qbic-pipelines
+  author: SusiJo, FriederikeHanssen, famosab
+  description: Convert vcf files to maf format
+  force: false
+  is_nfcore: false
+  name: vcftomaf
+  org: qbic-pipelines
+  outdir: .
+  skip_features: null
+  version: 1.0.0
+update: null
