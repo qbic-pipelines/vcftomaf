@@ -1,1 +1,43 @@
+bump_version: null
+lint:
+  files_exist:
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-vcftomaf_logo_light.png
+    - docs/images/nf-core-vcftomaf_logo_light.png
+    - docs/images/nf-core-vcftomaf_logo_dark.png
+    - .github/ISSUE_TEMPLATE/config.yml
+    - .github/workflows/awstest.yml
+    - .github/workflows/awsfulltest.yml
+    - conf/test_full.config
+  files_unchanged:
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-vcftomaf_logo_light.png
+    - docs/images/nf-core-vcftomaf_logo_light.png
+    - docs/images/nf-core-vcftomaf_logo_dark.png
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - assets/email_template.txt
+    - assets/sendmail_template.txt
+    - assets/multiqc_config.yml
+    - .github/CONTRIBUTING.md
+    - .github/PULL_REQUEST_TEMPLATE.md
+    - nextflow.config
+    - docs/README.md
+  multiqc_config:
+    - report_comment
+  nextflow_config:
+    - manifest.name
+    - manifest.homePage
+nf_core_version: 3.0.2
+org_path: null
 repository_type: pipeline
+template:
+  author: SusiJo, FriederikeHanssen
+  description: Convert vcf files to maf format
+  force: false
+  is_nfcore: false
+  name: vcftomaf
+  org: qbic-pipelines
+  outdir: .
+  skip_features: null
+  version: 1.0.0
+update: null
