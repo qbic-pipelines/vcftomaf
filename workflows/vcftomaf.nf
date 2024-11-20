@@ -114,7 +114,6 @@ workflow VCFTOMAF {
     VCF2MAF(
         GUNZIP.out.gunzip,
         fasta,
-        //genome,
         vep_cache_unpacked
     )
 
