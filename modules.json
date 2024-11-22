@@ -7,42 +7,42 @@
                 "nf-core": {
                     "bcftools/concat": {
                         "branch": "master",
-                        "git_sha": "44096c08ffdbc694f5f92ae174ea0f7ba0f37e09",
+                        "git_sha": "d1e0ec7670fa77905a378627232566ce54c3c26d",
                         "installed_by": ["modules"]
                     },
                     "bcftools/view": {
                         "branch": "master",
-                        "git_sha": "1013101da4252623fd7acf19cc581bae91d4f839",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
                     "gunzip": {
                         "branch": "master",
-                        "git_sha": "3a5fef109d113b4997c9822198664ca5f2716208",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
                         "branch": "master",
-                        "git_sha": "b7ebe95761cd389603f9cc0e0dc384c0f663815a",
+                        "git_sha": "cf17ca47590cc578dfb47db1c2a44ef86f89976d",
                         "installed_by": ["modules"]
                     },
                     "picard/liftovervcf": {
                         "branch": "master",
-                        "git_sha": "f434d0c671fe908552aa2064a8ae576059cfc39b",
+                        "git_sha": "49f4e50534fe4b64101e62ea41d5dc43b1324358",
                         "installed_by": ["modules"]
                     },
                     "tabix/tabix": {
                         "branch": "master",
-                        "git_sha": "9502adb23c0b97ed8e616bbbdfa73b4585aec9a1",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
                     "untar": {
                         "branch": "master",
-                        "git_sha": "5caf7640a9ef1d18d765d55339be751bb0969dfa",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
                     "vcf2maf": {
                         "branch": "master",
-                        "git_sha": "3f5420aa22e00bd030a2556dfdffc9e164ec0ec5",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/vcf2maf/vcf2maf.diff"
                     }

@@ -114,7 +114,6 @@ workflow VCFTOMAF {
     VCF2MAF(
         GUNZIP.out.gunzip,
         fasta,
-        genome,
         vep_cache_unpacked
     )
 
@@ -145,7 +144,9 @@ workflow VCFTOMAF {
         ch_multiqc_files.collect(),
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
-        ch_multiqc_logo.toList()
+        ch_multiqc_logo.toList(),
+        [], // replace_names
+        []  // sample_names
     )
 
     emit:
