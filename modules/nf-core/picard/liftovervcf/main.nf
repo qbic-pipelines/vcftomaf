@@ -4,8 +4,8 @@ process PICARD_LIFTOVERVCF {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/picard:3.1.1--hdfd78af_0' :
-        'biocontainers/picard:3.1.1--hdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/picard:3.3.0--hdfd78af_0' :
+        'biocontainers/picard:3.3.0--hdfd78af_0' }"
 
     input:
     tuple val(meta), path(input_vcf)
@@ -16,7 +16,6 @@ process PICARD_LIFTOVERVCF {
     output:
     tuple val(meta), path("*.lifted.vcf.gz")  , emit: vcf_lifted
     tuple val(meta), path("*.unlifted.vcf.gz"), emit: vcf_unlifted
-    tuple val(meta), path("*.log")            , emit: log
     path "versions.yml"                       , emit: versions
 
     when:
@@ -40,8 +39,7 @@ process PICARD_LIFTOVERVCF {
         --OUTPUT ${prefix}.lifted.vcf.gz \\
         --CHAIN $chain \\
         --REJECT ${prefix}.unlifted.vcf.gz \\
-        --REFERENCE_SEQUENCE $fasta \\
-        2> ${prefix}.liftover.log
+        --REFERENCE_SEQUENCE $fasta
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -52,8 +50,8 @@ process PICARD_LIFTOVERVCF {
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.lifted.vcf.gz
-    touch ${prefix}.unlifted.vcf.gz
+    echo | gzip > ${prefix}.lifted.vcf.gz
+    echo | gzip > ${prefix}.unlifted.vcf.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
