@@ -4,7 +4,7 @@
 [![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomaf/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.10812762-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.10812762)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A523.04.0-23aa62.svg)](https://www.nextflow.io/)
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
@@ -14,6 +14,10 @@
 
 **qbic-pipelines/vcftomaf** is a bioinformatics pipeline that converts input Variant Call Format (vcf) files with one or two columns of (paired) samples to tabular Mutation Annotation Format (maf).
 The resulting file(s) can be analyzed singly or as an entire cohort in R with [maftools](https://github.com/PoisonAlien/maftools).
+
+<p align="center">
+    <img title="Overview" src="docs/images/metromap.png" width=60%>
+</p>
 
 1. Filtering VCF files for PASS and optionally with a target bed file ([`BCFtools`](https://github.com/samtools/bcftools))
 2. Optional liftover (needs a `chain` file, `--fasta` should refer to target genome version) ([`Picard LiftOverVCF`](https://gatk.broadinstitute.org/hc/en-us/articles/360037060932-LiftoverVcf-Picard))
@@ -65,7 +69,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-qbic-pipelines/vcftomaf was originally written by [SusiJo](https://github.com/SusiJo) and [Friederike Hanssen](https://github.com/FriederikeHanssen)
+qbic-pipelines/vcftomaf was originally written by [SusiJo](https://github.com/SusiJo), [Friederike Hanssen](https://github.com/FriederikeHanssen) up to release 1.0.0. The pipeline was further developed by [Famke Bäuerle](https://github.com/famosab) after release 1.0.0.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
