@@ -7,17 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- [#11](https://github.com/qbic-pipelines/vcftomaf/pull/11) - Add metromap
-- [#18](https://github.com/qbic-pipelines/vcftomaf/pull/18) - Add options to stop filtering by `PASS`
+- [#11](https://github.com/qbic-pipelines/vcftomaf/pull/11) - Add metromap (@FriederikeHanssen=
+- [#18](https://github.com/qbic-pipelines/vcftomaf/pull/18) - Add options to stop filtering by `PASS` (@famosab)
 
 ### `Fixed`
 
-- [#16](https://github.com/qbic-pipelines/vcftomaf/pull/16) - Template update to 3.0.2
-- [#17](https://github.com/qbic-pipelines/vcftomaf/pull/17) - Update all modules
+- [#16](https://github.com/qbic-pipelines/vcftomaf/pull/16) - Template update to 3.0.2 (@famosab)
+- [#17](https://github.com/qbic-pipelines/vcftomaf/pull/17) - Update all modules (@famosab)
 
 ### `Dependencies`
 
 ### `Deprecated`
+
+Thanks to @d4straub for reviews.
 
 ## v1.0.0 - 13-03-2024
 
