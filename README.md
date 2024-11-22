@@ -19,7 +19,7 @@ The resulting file(s) can be analyzed singly or as an entire cohort in R with [m
     <img title="Overview" src="docs/images/metromap.png" width=60%>
 </p>
 
-1. Filtering VCF files for PASS and optionally with a target bed file ([`BCFtools`](https://github.com/samtools/bcftools))
+1. Optional Filtering of VCF files for PASS and / or with a target bed file ([`BCFtools`](https://github.com/samtools/bcftools))
 2. Optional liftover (needs a `chain` file, `--fasta` should refer to target genome version) ([`Picard LiftOverVCF`](https://gatk.broadinstitute.org/hc/en-us/articles/360037060932-LiftoverVcf-Picard))
 3. Conversion from vcf to maf format([`vcf2maf`](https://github.com/mskcc/vcf2maf))
 4. Collect QC metrics and versions ([`MultiQC`](http://multiqc.info/))
