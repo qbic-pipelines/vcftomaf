@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- [#11](https://github.com/qbic-pipelines/vcftomaf/pull/11) - Add metromap (@FriederikeHanssen=
+- [#11](https://github.com/qbic-pipelines/vcftomaf/pull/11) - Add metromap (@FriederikeHanssen)
 - [#18](https://github.com/qbic-pipelines/vcftomaf/pull/18) - Add options to stop filtering by `PASS` (@famosab)
 
 ### `Fixed`
