@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Fixed`
 
 - [#16](https://github.com/qbic-pipelines/vcftomaf/pull/16) - Template update to 3.0.2
+- [#17](https://github.com/qbic-pipelines/vcftomaf/pull/17) - Update all modules
 
 ### `Dependencies`
 
