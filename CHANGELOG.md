@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v1.1.0 - 22-11-2024 - Amaranth Filly
+## v1.1.0 - 25-11-2024 - Amaranth Filly
 
 ### `Added`
 
@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [#16](https://github.com/qbic-pipelines/vcftomaf/pull/16) - Template update to 3.0.2 (@famosab)
 - [#17](https://github.com/qbic-pipelines/vcftomaf/pull/17) - Update all modules (@famosab)
+- [#20](https://github.com/qbic-pipelines/vcftomaf/pull/20) - Remove unused CI tests
 
 ### `Dependencies`
 
