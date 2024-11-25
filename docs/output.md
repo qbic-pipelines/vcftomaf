@@ -22,7 +22,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `bcftools/`
-  - `*.vcf.gz`: PASS and optionally target bed filtered and compressed VCF file.
+  - `*.vcf.gz`: Optionally PASS and target bed filtered and compressed VCF file.
 
 </details>
 
