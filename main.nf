@@ -37,8 +37,11 @@ workflow QBICPIPELINES_VCFTOMAF {
     //
     // SET PARAMETERS
     //
-    params.fasta = getGenomeAttribute('fasta')
-    params.dict = getGenomeAttribute('dict')
+    params.fasta               = getGenomeAttribute('fasta')
+    params.dict                = getGenomeAttribute('dict')
+    params.vep_cache_version   = getGenomeAttribute('vep_cache_version')
+    params.vep_genome          = getGenomeAttribute('vep_genome')
+    params.vep_species         = getGenomeAttribute('vep_species')
 
     // Extra files
     intervals      = params.intervals      ? Channel.fromPath(params.intervals).collect()      : Channel.value([])
@@ -52,8 +55,11 @@ workflow QBICPIPELINES_VCFTOMAF {
     genome        = params.genome   ?: Channel.empty()
 
     // VEP cache
-    vep_cache          = Channel.value([]) //params.vep_cache ? Channel.fromPath(params.vep_cache).collect() : Channel.value([])
+    vep_cache          = params.vep_cache ? Channel.fromPath(params.vep_cache).collect() : Channel.value([])
     vep_cache_unpacked = Channel.value([])
+    vep_cache_version  = params.vep_cache_version
+    vep_genome         = params.vep_genome
+    vep_species        = params.vep_species
 
 
     //
@@ -68,7 +74,10 @@ workflow QBICPIPELINES_VCFTOMAF {
         liftover_chain,
         genome,
         vep_cache,
-        vep_cache_unpacked
+        vep_cache_unpacked,
+        vep_cache_version,
+        vep_genome,
+        vep_species
     )
 
     emit:

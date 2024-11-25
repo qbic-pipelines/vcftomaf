@@ -18,6 +18,7 @@ include { paramsSummaryMap            } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc        } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML      } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText      } from '../../subworkflows/local/utils_nfcore_vcftomaf_pipeline'
+include { VCF_ANNOTATE_ENSEMBLVEP     } from '../../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
 
 
 /*
@@ -37,6 +38,9 @@ workflow VCFTOMAF {
     genome
     vep_cache
     vep_cache_unpacked
+    vep_cache_version
+    vep_genome
+    vep_species
 
     main:
 
@@ -46,20 +50,6 @@ workflow VCFTOMAF {
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
-
-    // VEP annotation is currently not supported from within vcf2maf : https://github.com/mskcc/vcf2maf/issues/335
-    // if (params.vep_cache){
-    //     ch_vep_cache = vep_cache.map{
-    //         it -> def new_id = ""
-    //             if(it) {
-    //                 new_id = it[0].simpleName.toString()
-    //             }
-    //         [[id:new_id], it]
-    //     }
-    //     // UNTAR if available
-    //     vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
-    //     ch_versions         = ch_versions.mix(UNTAR.out.versions)
-    // }
 
     // BRANCH CHANNEL
     ch_samplesheet.branch{
@@ -79,6 +69,32 @@ workflow VCFTOMAF {
 
     // Join both channels back together
     ch_vcf = ch_input.is_indexed.mix(ch_indexed_to_index)
+
+    // VEP annotation is currently not supported from within vcf2maf : https://github.com/mskcc/vcf2maf/issues/335
+    // Therefore we use the vcf_annotate_ensemblvep subworkflow here
+
+    if (params.vep_cache){
+        ch_vep_cache = vep_cache.map{
+            it -> def new_id = ""
+                if(it) {
+                    new_id = it[0].simpleName.toString()
+                }
+            [[id:new_id], it]
+        }
+        // UNTAR if available
+        vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
+        ch_versions         = ch_versions.mix(UNTAR.out.versions)
+    }
+
+    VCF_ANNOTATE_ENSEMBLVEP(
+        ch_vcf,
+        fasta,
+        vep_genome,
+        vep_species,// species
+        vep_cache_version,  // cache_version
+        vep_cache_unpacked, // ch_cache
+        [] // ch_extra_files
+    )
 
     //
     // MODULE: Run PASS + BED filtering
