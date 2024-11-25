@@ -70,23 +70,24 @@ workflow VCFTOMAF {
     // Join both channels back together
     ch_vcf = ch_input.is_indexed.mix(ch_indexed_to_index)
 
-    // VEP annotation is currently not supported from within vcf2maf : https://github.com/mskcc/vcf2maf/issues/335
-    // Therefore we use the vcf_annotate_ensemblvep subworkflow here
+    if (params.run_vep) {
+        // VEP annotation is currently not supported from within vcf2maf : https://github.com/mskcc/vcf2maf/issues/335
+        // Therefore we use the vcf_annotate_ensemblvep subworkflow here
 
-    if (params.vep_cache){
-        ch_vep_cache = vep_cache.map{
-            it -> def new_id = ""
-                if(it) {
-                    new_id = it[0].simpleName.toString()
-                }
-            [[id:new_id], it]
+        if (params.vep_cache){
+            ch_vep_cache = vep_cache.map{
+                it -> def new_id = ""
+                    if(it) {
+                        new_id = it[0].simpleName.toString()
+                    }
+                [[id:new_id], it]
+            }
+            // UNTAR if available
+            vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
+            ch_versions         = ch_versions.mix(UNTAR.out.versions)
         }
-        // UNTAR if available
-        vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
-        ch_versions         = ch_versions.mix(UNTAR.out.versions)
-    }
 
-    VCF_ANNOTATE_ENSEMBLVEP(
+        VCF_ANNOTATE_ENSEMBLVEP(
         ch_vcf,
         fasta,
         vep_genome,
@@ -94,7 +95,11 @@ workflow VCFTOMAF {
         vep_cache_version,  // cache_version
         vep_cache_unpacked, // ch_cache
         [] // ch_extra_files
-    )
+        )
+        ch_vcf = VCF_ANNOTATE_ENSEMBLVEP.out.vcf_tbi
+        ch_versions = ch_versions.mix(VCF_ANNOTATE_ENSEMBLVEP.out.versions)
+    }
+
 
     //
     // MODULE: Run PASS + BED filtering
