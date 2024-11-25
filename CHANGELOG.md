@@ -24,4 +24,4 @@ Thanks to @d4straub for reviews.
 
 ## v1.0.0 - 13-03-2024 - Plum Puppy
 
-Initial release of qbic-pipelines/vcftomaf, created with the [nf-core](https://nf-co.re/) template.
+Initial release of qbic-pipelines/vcftomaf, created with the [nf-core](https://nf-co.re/) template, written by @SusiJo and @FriederikeHanssen.
