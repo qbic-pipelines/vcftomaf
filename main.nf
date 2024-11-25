@@ -7,44 +7,16 @@
 ----------------------------------------------------------------------------------------
 */
 
-nextflow.enable.dsl = 2
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS / WORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { VCFTOMAF  } from './workflows/vcftomaf'
+include { VCFTOMAF                } from './workflows/vcftomaf'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
-
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcftomaf_pipeline'
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    GENOME PARAMETER VALUES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-params.fasta = getGenomeAttribute('fasta')
-params.dict = getGenomeAttribute('dict')
-
-// Extra files
-intervals      = params.intervals      ? Channel.fromPath(params.intervals).collect()      : Channel.value([])
-liftover_chain = params.liftover_chain ? Channel.fromPath(params.liftover_chain).collect() : Channel.value([])
-
-// FASTA
-fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
-dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.empty()
-
-// Genome version
-genome        = params.genome   ?: Channel.empty()
-
-// VEP cache
-vep_cache          = Channel.value([]) //params.vep_cache ? Channel.fromPath(params.vep_cache).collect() : Channel.value([])
-vep_cache_unpacked = Channel.value([])
-
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,6 +33,28 @@ workflow QBICPIPELINES_VCFTOMAF {
     samplesheet // channel: samplesheet read in from --input
 
     main:
+
+    //
+    // SET PARAMETERS
+    //
+    params.fasta = getGenomeAttribute('fasta')
+    params.dict = getGenomeAttribute('dict')
+
+    // Extra files
+    intervals      = params.intervals      ? Channel.fromPath(params.intervals).collect()      : Channel.value([])
+    liftover_chain = params.liftover_chain ? Channel.fromPath(params.liftover_chain).collect() : Channel.value([])
+
+    // FASTA
+    fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
+    dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.empty()
+
+    // Genome version
+    genome        = params.genome   ?: Channel.empty()
+
+    // VEP cache
+    vep_cache          = Channel.value([]) //params.vep_cache ? Channel.fromPath(params.vep_cache).collect() : Channel.value([])
+    vep_cache_unpacked = Channel.value([])
+
 
     //
     // WORKFLOW: Run pipeline
@@ -89,13 +83,11 @@ workflow QBICPIPELINES_VCFTOMAF {
 workflow {
 
     main:
-
     //
     // SUBWORKFLOW: Run initialisation tasks
     //
     PIPELINE_INITIALISATION (
         params.version,
-        params.help,
         params.validate_params,
         params.monochrome_logs,
         args,
@@ -110,8 +102,6 @@ workflow {
         PIPELINE_INITIALISATION.out.samplesheet
     )
 
-    //
-    // SUBWORKFLOW: Run completion tasks
     //
     PIPELINE_COMPLETION (
         params.email,

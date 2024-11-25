@@ -7,17 +7,17 @@
 //
 // MODULE: Installed directly from nf-core/modules
 //
-include { BCFTOOLS_VIEW               } from '../modules/nf-core/bcftools/view/main'
-include { GUNZIP                      } from '../modules/nf-core/gunzip/main'
-include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
-include { PICARD_LIFTOVERVCF          } from '../modules/nf-core/picard/liftovervcf/main'
-include { TABIX_TABIX                 } from '../modules/nf-core/tabix/tabix/main'
-include { UNTAR                       } from '../modules/nf-core/untar/main'
-include { VCF2MAF                     } from '../modules/nf-core/vcf2maf/main'
-include { paramsSummaryMap            } from 'plugin/nf-validation'
-include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_vcftomaf_pipeline'
+include { BCFTOOLS_VIEW               } from '../../modules/nf-core/bcftools/view/main'
+include { GUNZIP                      } from '../../modules/nf-core/gunzip/main'
+include { MULTIQC                     } from '../../modules/nf-core/multiqc/main'
+include { PICARD_LIFTOVERVCF          } from '../../modules/nf-core/picard/liftovervcf/main'
+include { TABIX_TABIX                 } from '../../modules/nf-core/tabix/tabix/main'
+include { UNTAR                       } from '../../modules/nf-core/untar/main'
+include { VCF2MAF                     } from '../../modules/nf-core/vcf2maf/main'
+include { paramsSummaryMap            } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc        } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML      } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText      } from '../../subworkflows/local/utils_nfcore_vcftomaf_pipeline'
 
 
 /*
@@ -114,7 +114,6 @@ workflow VCFTOMAF {
     VCF2MAF(
         GUNZIP.out.gunzip,
         fasta,
-        genome,
         vep_cache_unpacked
     )
 
@@ -145,7 +144,9 @@ workflow VCFTOMAF {
         ch_multiqc_files.collect(),
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
-        ch_multiqc_logo.toList()
+        ch_multiqc_logo.toList(),
+        [],
+        []
     )
 
     emit:
