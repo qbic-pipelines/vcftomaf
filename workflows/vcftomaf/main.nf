@@ -89,7 +89,7 @@ workflow VCFTOMAF {
 
         VCF_ANNOTATE_ENSEMBLVEP(
         ch_vcf,
-        fasta,
+        fasta.map{ it -> [ [ id:it.baseName ], it ] },
         vep_genome,
         vep_species,// species
         vep_cache_version,  // cache_version
