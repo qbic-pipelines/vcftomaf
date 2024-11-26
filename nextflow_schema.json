@@ -108,6 +108,34 @@
                 }
             }
         },
+        "annotation_options": {
+            "title": "Annotation options",
+            "type": "object",
+            "description": "Define parameters for VEP annotation",
+            "default": "",
+            "properties": {
+                "run_vep": {
+                    "type": "boolean",
+                    "description": "True if you want to annotate with VEP"
+                },
+                "vep_cache": {
+                    "type": "string",
+                    "description": "Path to VEP cache which should contain the relevant species, genome and build directories at the path ${vep_species}/${vep_genome}_${vep_cache_version}"
+                },
+                "vep_cache_version": {
+                    "type": "string",
+                    "description": "Alternatively cache version can be use to specify the correct Ensembl Genomes version number as these differ from the concurrent Ensembl/VEP version numbers"
+                },
+                "vep_genome": {
+                    "type": "string",
+                    "description": "This is used to specify the genome when looking for local cache, or cloud based cache."
+                },
+                "vep_species": {
+                    "type": "string",
+                    "description": "Alternatively species listed in Ensembl Genomes caches can be used."
+                }
+            }
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
@@ -254,6 +282,9 @@
         },
         {
             "$ref": "#/$defs/reference_genome_options"
+        },
+        {
+            "$ref": "#/$defs/annotation_options"
         },
         {
             "$ref": "#/$defs/institutional_config_options"

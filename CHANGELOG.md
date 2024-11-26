@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
+- [#21](https://github.com/qbic-pipelines/vcftomaf/pull/21) - Add VEP annotation via subworkflow (@famosab)
+
 ### `Fixed`
 
 ### `Dependencies`

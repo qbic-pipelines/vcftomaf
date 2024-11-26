@@ -18,6 +18,7 @@ include { paramsSummaryMap            } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc        } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML      } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText      } from '../../subworkflows/local/utils_nfcore_vcftomaf_pipeline'
+include { ENSEMBLVEP_VEP } from '../../modules/nf-core/ensemblvep/vep/main'
 
 
 /*
@@ -37,6 +38,9 @@ workflow VCFTOMAF {
     genome
     vep_cache
     vep_cache_unpacked
+    vep_cache_version
+    vep_genome
+    vep_species
 
     main:
 
@@ -47,38 +51,63 @@ workflow VCFTOMAF {
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
 
-    // VEP annotation is currently not supported from within vcf2maf : https://github.com/mskcc/vcf2maf/issues/335
-    // if (params.vep_cache){
-    //     ch_vep_cache = vep_cache.map{
-    //         it -> def new_id = ""
-    //             if(it) {
-    //                 new_id = it[0].simpleName.toString()
-    //             }
-    //         [[id:new_id], it]
-    //     }
-    //     // UNTAR if available
-    //     vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
-    //     ch_versions         = ch_versions.mix(UNTAR.out.versions)
-    // }
+    if (params.run_vep) {
+        // VEP annotation is currently not supported from within vcf2maf : https://github.com/mskcc/vcf2maf/issues/335
+        // Therefore we use the vcf_annotate_ensemblvep subworkflow here
 
-    // BRANCH CHANNEL
-    ch_samplesheet.branch{
-        is_indexed:  it[0].index == true
-        to_index:    it[0].index == false
-    }.set{ch_input}
+        if (params.vep_cache){
+            ch_vep_cache = vep_cache.map{
+                it -> def new_id = ""
+                    if(it) {
+                        new_id = it[0].simpleName.toString()
+                    }
+                [[id:new_id], it]
+            }
+            // UNTAR if available
+            vep_cache_unpacked  = UNTAR(ch_vep_cache).untar.map { it[1] }
+            ch_versions         = ch_versions.mix(UNTAR.out.versions)
+        }
 
-    // Remove empty index [] from channel = it[2]
-    input_to_index = ch_input.to_index.map{ it -> [it[0], it[1]] }
+        ENSEMBLVEP_VEP(
+        ch_samplesheet,
+        vep_genome,
+        vep_species,
+        vep_cache_version,
+        vep_cache_unpacked,
+        fasta.map{ it -> [ [ id:it.baseName ], it ] },
+        []
+        )
+        ch_versions = ch_versions.mix(ENSEMBLVEP_VEP.out.versions)
 
-    // Create tbi index only if not provided
-    TABIX_TABIX(input_to_index)
-    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
+        TABIX_TABIX(ENSEMBLVEP_VEP.out.vcf)
+        ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
-    // Join tbi index back to input
-    ch_indexed_to_index = input_to_index.join(TABIX_TABIX.out.tbi)
+        ENSEMBLVEP_VEP.out.vcf.dump(tag: 'vcf-before')
 
-    // Join both channels back together
-    ch_vcf = ch_input.is_indexed.mix(ch_indexed_to_index)
+        // Join tbi index back to input
+        ch_vcf = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi)
+        ch_vcf.dump(tag: 'vcf-sfter')
+    }
+    else {
+        // BRANCH CHANNEL
+        ch_samplesheet.branch{
+            is_indexed:  it[0].index == true
+            to_index:    it[0].index == false
+        }.set{ch_input}
+
+        // Remove empty index [] from channel = it[2]
+        input_to_index = ch_input.to_index.map{ it -> [it[0], it[1]] }
+
+        // Create tbi index only if not provided
+        TABIX_TABIX(input_to_index)
+        ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
+
+        // Join tbi index back to input
+        ch_indexed_to_index = input_to_index.join(TABIX_TABIX.out.tbi)
+
+        // Join both channels back together
+        ch_vcf = ch_input.is_indexed.mix(ch_indexed_to_index)
+    }
 
     //
     // MODULE: Run PASS + BED filtering
