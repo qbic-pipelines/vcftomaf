@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
+- [#25](https://github.com/qbic-pipelines/vcftomaf/pull/25) - Template update to 3.1.1 (@famosab)
+
 ### `Dependencies`
 
 ### `Deprecated`
