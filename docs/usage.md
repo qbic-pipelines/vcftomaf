@@ -98,13 +98,13 @@ Additionally, if the path to a file containing the targeted intervals for panel 
 
 Boolean flag to enable filtering of the variants keeping only variants marked as `PASS` when set to `true`. Default is false.
 
-<!-- ### `--vep_cache`
+### `--vep_cache`
 
 Please provide a path to a compressed vep-cache file if you wish to run vep.
 
 ### `--run_vep`
 
-Set to true if you wish to run vep. Default is false. -->
+Set to true if you wish to run vep. Default is false.
 
 ### Params file
 
