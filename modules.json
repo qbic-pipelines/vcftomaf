@@ -32,12 +32,12 @@
                     },
                     "untar": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
                         "installed_by": ["modules"]
                     },
                     "vcf2maf": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "538cbd31deef6e6abe0daafa704a918ad6974699",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/vcf2maf/vcf2maf.diff"
                     }
