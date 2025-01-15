@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.2.0 - 15-01-2024 - Burgundy Piglet
+
+### `Added`
+
+- [#24](https://github.com/qbic-pipelines/vcftomaf/pull/24) - Enable VEP annotation with vcf2maf module (@famosab)
+
+### `Fixed`
+
+- [#25](https://github.com/qbic-pipelines/vcftomaf/pull/25) - Template update to 3.1.1 (@famosab)
+
+### `Dependencies`
+
+### `Deprecated`
+
 ## v1.1.0 - 25-11-2024 - Amaranth Filly
 
 ### `Added`
