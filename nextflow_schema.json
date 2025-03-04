@@ -55,6 +55,14 @@
                     "type": "string",
                     "description": "For Liftover - dictionary for fasta file"
                 },
+                "run_vep": {
+                    "type": "boolean",
+                    "description": "Run annotation with VEP"
+                },
+                "vep_cache": {
+                    "type": "string",
+                    "description": "Path to tar.gz containing the VEP cache"
+                },
                 "email": {
                     "type": "string",
                     "description": "Email address for completion summary.",
