@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Fixed`
 
 - [#34](https://github.com/qbic-pipelines/vcftomaf/pull/34) - Update vcf2maf configuration to adhere to hg38 as reference genome (@famosab)
+- [#35](https://github.com/qbic-pipelines/vcftomaf/pull/35) - Template update to 3.2.0 (@famosab)
 
 ### `Dependencies`
 
