@@ -15,7 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#35](https://github.com/qbic-pipelines/vcftomaf/pull/35) - Template update to 3.2.0 (@famosab)
 - [#37](https://github.com/qbic-pipelines/vcftomaf/pull/37) - Template update to 3.2.1 (@famosab)
 
-
 ### `Dependencies`
 
 | Dependency | Old version | New version |
