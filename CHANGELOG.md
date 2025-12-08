@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Dependency | Old version | New version |
 | ---------- | ----------- | ----------- |
-| MultiQC.   | 1.27        | 1.32        |
+| MultiQC.   | 1.25.1      | 1.32        |
 
 ### `Deprecated`
 
