@@ -14,4 +14,3 @@ RUN apt-get update -qq
 ENV PATH /opt/conda/envs/qbic-pipelines-vcftomaf-dev/bin:$PATH
 # Dump the details of the installed packates to a file for posterity
 RUN mamba env export --name qbic-pipelines-vcftomaf-dev > qbic-pipelines-vcftomaf-dev.yml
-

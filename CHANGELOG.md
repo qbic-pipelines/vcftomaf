@@ -14,11 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#34](https://github.com/qbic-pipelines/vcftomaf/pull/34) - Update vcf2maf configuration to adhere to hg38 as reference genome (@famosab)
 - [#35](https://github.com/qbic-pipelines/vcftomaf/pull/35) - Template update to 3.2.0 (@famosab)
 - [#37](https://github.com/qbic-pipelines/vcftomaf/pull/37) - Template update to 3.2.1 (@famosab)
+- [#38](https://github.com/qbic-pipelines/vcftomaf/pull/38) - Template update to 3.5.1 (@famosab)
 
 ### `Dependencies`
 
 | Dependency | Old version | New version |
 | ---------- | ----------- | ----------- |
+| MultiQC.   | 1.27        | 1.32        |
 
 ### `Deprecated`
 
