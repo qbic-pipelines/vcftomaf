@@ -15,12 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#35](https://github.com/qbic-pipelines/vcftomaf/pull/35) - Template update to 3.2.0 (@famosab)
 - [#37](https://github.com/qbic-pipelines/vcftomaf/pull/37) - Template update to 3.2.1 (@famosab)
 - [#38](https://github.com/qbic-pipelines/vcftomaf/pull/38) - Template update to 3.5.1 (@famosab)
+- [#39](https://github.com/qbic-pipelines/vcftomaf/pull/39) - Update all modules (@famosab)
 
 ### `Dependencies`
 
-| Dependency | Old version | New version |
-| ---------- | ----------- | ----------- |
-| MultiQC    | 1.25.1      | 1.32        |
+| Dependency.    | Old version | New version |
+| -------------- | ----------- | ----------- |
+| BCFtools       | 1.20        | 1.22        |
+| MultiQC        | 1.25.1      | 1.33        |
+| Picard         | 3.3.0       | 3.4.0       |
+| Tabix (HTSlib) | 1.20        | 1.21        |
 
 ### `Deprecated`
 

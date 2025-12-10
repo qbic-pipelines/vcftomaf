@@ -71,10 +71,9 @@ workflow VCFTOMAF {
 
     // Create tbi index only if not provided
     TABIX_TABIX(input_to_index)
-    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
     // Join tbi index back to input
-    ch_indexed_to_index = input_to_index.join(TABIX_TABIX.out.tbi)
+    ch_indexed_to_index = input_to_index.join(TABIX_TABIX.out.index)
 
     // Join both channels back together
     ch_vcf = ch_input.is_indexed.mix(ch_indexed_to_index)
