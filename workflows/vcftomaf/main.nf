@@ -45,13 +45,7 @@ workflow VCFTOMAF {
     //
 
     if (params.vep_cache) {
-        ch_vep_cache = vep_cache.map { it ->
-            def new_id = ""
-            if (it) {
-                new_id = it[0].simpleName.toString()
-            }
-            [[id: new_id], it]
-        }
+        ch_vep_cache = vep_cache.map { it -> [[id: it[0].simpleName.toString()], it] }
         // UNTAR if available
         vep_cache_unpacked = UNTAR(ch_vep_cache).untar.map { unpacked -> unpacked[1] }
         ch_versions = ch_versions.mix(UNTAR.out.versions)
