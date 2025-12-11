@@ -16,7 +16,7 @@
                     "vcf2maf": "1.6.22"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomaf": "v1.3.0dev"
+                    "qbic-pipelines/vcftomaf": "v1.2.1"
                 }
             },
             [

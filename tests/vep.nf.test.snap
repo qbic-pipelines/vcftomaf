@@ -20,7 +20,7 @@
                     "ensemblvep": 113.0
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomaf": "v1.3.0dev"
+                    "qbic-pipelines/vcftomaf": "v1.2.1"
                 }
             },
             [

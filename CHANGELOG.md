@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v1.3.0dev
+## v1.2.1 - 11-12-2025 - Lemon Fry
 
 ### `Added`
 
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Deprecated`
 
-## v1.2.0 - 15-01-2024 - Burgundy Piglet
+## v1.2.0 - 15-01-2025 - Burgundy Piglet
 
 ### `Added`
 
