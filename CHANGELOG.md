@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v1.2.1 - 11-12-2025 - Lemon Fry
 
+This patch release bumps the required Nextflow version to `>=25.04.0`.
+
 ### `Added`
 
 - [#36](https://github.com/qbic-pipelines/vcftomaf/pull/36) - Swap pipeline tests to nf-test (@famosab)
