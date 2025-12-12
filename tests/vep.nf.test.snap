@@ -17,10 +17,10 @@
                 },
                 "VCF2MAF": {
                     "vcf2maf": "1.6.22",
-                    "ensemblvep": 113.0
+                    "ensemblvep": 113
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomaf": "v1.2.1"
+                    "qbic-pipelines/vcftomaf": "v1.3.0dev"
                 }
             },
             [
